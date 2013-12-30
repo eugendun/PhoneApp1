@@ -12,6 +12,11 @@
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="Add"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -21,10 +26,24 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0" Margin="12,17,0,28" d:IsLocked="True">
             <TextBlock Text="TUTOR" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Text="Veranstaltung" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
+        <Grid Grid.Row="1">
+            <phone:LongListSelector ItemsSource="{Binding Subjects}">
+                <phone:LongListSelector.Resources>
+                    <DataTemplate x:Key="DataTemplate1">
+                        <Grid>
+                            <TextBlock Text="{Binding Name}"/>
+                        </Grid>
+                    </DataTemplate>
+                </phone:LongListSelector.Resources>
+                <phone:LongListSelector.ItemTemplate>
+                    <StaticResource ResourceKey="DataTemplate1"/>
+                </phone:LongListSelector.ItemTemplate>
+            </phone:LongListSelector>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
     </Grid>

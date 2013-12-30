@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 
 using PhoneApp1.Models;
+using System.Diagnostics;
 
 namespace PhoneApp1.ViewModel
 {
@@ -42,10 +43,10 @@ namespace PhoneApp1.ViewModel
 
             Members = new ObservableCollection<Member>(membersInDB);
 
-            //var subjectsInDB = from Subject s in phoneAppDB.Subjects
-            //                   select s;
+            var subjectsInDB = from Subject s in phoneAppDB.Subjects
+                               select s;
 
-            //Subjects = new ObservableCollection<Subject>(subjectsInDB);
+            Subjects = new ObservableCollection<Subject>(subjectsInDB);
         }
 
         #region Members
@@ -83,35 +84,35 @@ namespace PhoneApp1.ViewModel
 
         #endregion
 
-        //#region Subjects
+        #region Subjects
 
-        //private ObservableCollection<Subject> _subjects;
-        //public ObservableCollection<Subject> Subjects
-        //{
-        //    get { return _subjects; }
-        //    set
-        //    {
-        //        _subjects = value;
-        //        NotifyPropertyChanged("Subjects");
-        //    }
-        //}
+        private ObservableCollection<Subject> _subjects;
+        public ObservableCollection<Subject> Subjects
+        {
+            get { return _subjects; }
+            set
+            {
+                _subjects = value;
+                NotifyPropertyChanged("Subjects");
+            }
+        }
 
-        //public void AddSubject(Subject newSubject)
-        //{
-        //    phoneAppDB.Subjects.InsertOnSubmit(newSubject);
-        //    phoneAppDB.SubmitChanges();
+        public void AddSubject(Subject newSubject)
+        {
+            phoneAppDB.Subjects.InsertOnSubmit(newSubject);
+            phoneAppDB.SubmitChanges();
 
-        //    Subjects.Add(newSubject);
-        //}
+            Subjects.Add(newSubject);
+        }
 
-        //public void DeleteSubject(Subject subjectToDelete)
-        //{
-        //    Subjects.Remove(subjectToDelete);
+        public void DeleteSubject(Subject subjectToDelete)
+        {
+            Subjects.Remove(subjectToDelete);
 
-        //    phoneAppDB.Subjects.DeleteOnSubmit(subjectToDelete);
-        //    phoneAppDB.SubmitChanges();
-        //}
+            phoneAppDB.Subjects.DeleteOnSubmit(subjectToDelete);
+            phoneAppDB.SubmitChanges();
+        }
 
-        //#endregion
+        #endregion
     }
 }

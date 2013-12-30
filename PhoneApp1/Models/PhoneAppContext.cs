@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using System.Diagnostics;
 
 namespace PhoneApp1.Models
 {
@@ -10,7 +11,7 @@ namespace PhoneApp1.Models
         public PhoneAppContext(string connectionString) : base(connectionString) { }
 
         public Table<Member> Members;
-        //public Table<Subject> Subjects;
+        public Table<Subject> Subjects;
         public Table<SubjectMember> SubjectMembers;
     }
 
@@ -48,10 +49,6 @@ namespace PhoneApp1.Models
     [Table]
     public class Member : NotifyingModel
     {
-        // TODO find out what does it mean.
-        //[Column(IsVersion = true)]
-        //private Binary _version;
-
         private int _matNr;
         private string _surname;
         private string _forename;
@@ -120,148 +117,139 @@ namespace PhoneApp1.Models
             }
         }
 
-        #region relationships
-
-        [Column]
-        private EntitySet<SubjectMember> _membersSubjects;
-        internal int _memberSubjectId;
-
-        [Association(Storage = "_membersSubjects", ThisKey = "_memberSubjectId", OtherKey = "_memberId")]
-        public EntitySet<SubjectMember> MembersSubjects
+        private EntitySet<SubjectMember> _subjectMembers;
+        [Association(Storage = "_subjectMembers", OtherKey = "MemberMatNr")]
+        public EntitySet<SubjectMember> SubjectMembers
         {
-            get { return _membersSubjects; }
-            set { _membersSubjects.Assign(value); }
+            get { return _subjectMembers; }
+            set { _subjectMembers = value; }
         }
 
-        public void AddSubjectMember(SubjectMember subjectMember)
+        public Member()
         {
-            _membersSubjects.Add(subjectMember);
+            _subjectMembers = new EntitySet<SubjectMember>(
+                new Action<SubjectMember>(this.attach_SubjectMember),
+                new Action<SubjectMember>(this.detach_SubjectMember));
         }
 
-        #endregion
+        private void attach_SubjectMember(SubjectMember newSubjectMember)
+        {
+            NotifyPropertyChanging("Member");
+            newSubjectMember.Member = this;
+        }
+
+        private void detach_SubjectMember(SubjectMember subjectMemberToRemove)
+        {
+            NotifyPropertyChanging("Member");
+            subjectMemberToRemove.Member = null;
+        }
     }
 
-    //[Table]
-    //public class Subject : NotifyingModel
-    //{
-    //    private int _subjectId;
-    //    [Column(IsPrimaryKey = true, IsDbGenerated = true, CanBeNull = false, AutoSync = AutoSync.OnInsert)]
-    //    public int SubjectId
-    //    {
-    //        get { return _subjectId; }
-    //        set
-    //        {
-    //            if (_subjectId != value)
-    //            {
-    //                NotifyPropertyChanging("Id");
-    //                _subjectId = value;
-    //                NotifyPropertyChanged("Id");
-    //            }
-    //        }
-    //    }
-
-    //    private string _name;
-    //    [Column]
-    //    public string Name
-    //    {
-    //        get { return _name; }
-    //        set
-    //        {
-    //            if (_name != value)
-    //            {
-    //                NotifyPropertyChanging("Name");
-    //                _name = value;
-    //                NotifyPropertyChanged("Name");
-    //            }
-    //        }
-    //    }
-
-    //    private DateTime _beginDate;
-    //    [Column]
-    //    public DateTime BeginDate
-    //    {
-    //        get { return _beginDate; }
-    //        set
-    //        {
-    //            if (_beginDate != value)
-    //            {
-    //                NotifyPropertyChanging("BeginDate");
-    //                _beginDate = value;
-    //                NotifyPropertyChanged("BeginDate");
-    //            }
-    //        }
-    //    }
-
-    //    private DateTime _endDate;
-    //    [Column]
-    //    public DateTime EndDate
-    //    {
-    //        get { return _endDate; }
-    //        set
-    //        {
-    //            if (_endDate != value)
-    //            {
-    //                NotifyPropertyChanging("EndDate");
-    //                _endDate = value;
-    //                NotifyPropertyChanged("EndDate");
-    //            }
-    //        }
-    //    }
-
-    //    private EntitySet<SubjectMember> _subjectMembers;
-    //    [Association(Storage = "_subjectMembers", ThisKey = "SubjectId", OtherKey = "SubjectMemberId", DeleteOnNull = false)]
-    //    public EntitySet<SubjectMember> SubjectMembers
-    //    {
-    //        get { return _subjectMembers; }
-    //        set { _subjectMembers.Assign(value); }
-    //    }
-    //}
-
     [Table]
-    public class SubjectMember : NotifyingModel
+    public class Subject : NotifyingModel
     {
-        private int _subjectMemberId;
-        //private EntityRef<Subject> _subject;
-
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
-        public int SubjectMemberId
+        private int SubjectId { get; set; }
+
+        private string _name;
+        [Column]
+        public string Name
         {
-            get { return _subjectMemberId; }
+            get { return _name; }
             set
             {
-                if (_subjectMemberId != value)
+                if (_name != value)
                 {
-                    _subjectMemberId = value;
+                    NotifyPropertyChanging("Name");
+                    _name = value;
+                    NotifyPropertyChanged("Name");
                 }
             }
         }
 
-        #region relationships
-
+        private DateTime _beginDate;
         [Column]
-        internal int _memberId;
+        public DateTime BeginDate
+        {
+            get { return _beginDate; }
+            set
+            {
+                if (_beginDate != value)
+                {
+                    NotifyPropertyChanging("BeginDate");
+                    _beginDate = value;
+                    NotifyPropertyChanged("BeginDate");
+                }
+            }
+        }
+
+        private DateTime _endDate;
+        [Column]
+        public DateTime EndDate
+        {
+            get { return _endDate; }
+            set
+            {
+                if (_endDate != value)
+                {
+                    NotifyPropertyChanging("EndDate");
+                    _endDate = value;
+                    NotifyPropertyChanged("EndDate");
+                }
+            }
+        }
+
+        private EntitySet<SubjectMember> _subjectMembers;
+        [Association(Storage = "_subjectMembers", OtherKey = "SubjectId")]
+        public EntitySet<SubjectMember> SubjectMembers
+        {
+            get { return _subjectMembers; }
+            set { _subjectMembers.Assign(value); }
+        }
+
+        public Subject()
+        {
+            _subjectMembers = new EntitySet<SubjectMember>(
+                new Action<SubjectMember>(this.attach_SubjectMember),
+                new Action<SubjectMember>(this.detach_SubjectMember));
+        }
+
+        private void attach_SubjectMember(SubjectMember newSubjectMember)
+        {
+            NotifyPropertyChanging("Subject");
+            newSubjectMember.Subject = this;
+        }
+
+        private void detach_SubjectMember(SubjectMember subjectMemberToRemove)
+        {
+            NotifyPropertyChanging("Subject");
+            subjectMemberToRemove.Subject = null;
+        }
+    }
+
+    [Table]
+    public class SubjectMember
+    {
+        [Column(IsPrimaryKey = true)]
+        private int SubjectId;
+
+        [Column(IsPrimaryKey = true)]
+        private int MemberMatNr;
+
+        private EntityRef<Subject> _subject;
+        [Association(Storage = "_subject", ThisKey = "SubjectId")]
+        public Subject Subject
+        {
+            get { return _subject.Entity; }
+            set { _subject.Entity = value; }
+        }
+
         private EntityRef<Member> _member;
-
-        //[Association(OtherKey = "SubjectId", ThisKey = "SubjectMemberId", DeleteOnNull = true)]
-        //public EntityRef<Subject> Subject
-        //{
-        //    get { return _subject; }
-        //    set { _subject = value; }
-        //}
-
-        [Association(Storage = "_member", OtherKey = "MatNr", ThisKey = "_memberId", IsForeignKey = true)]
+        [Association(Storage = "_member", ThisKey = "MemberMatNr")]
         public Member Member
         {
             get { return _member.Entity; }
-            set
-            {
-                NotifyPropertyChanging("Member");
-                _memberId = value.MatNr;
-                NotifyPropertyChanged("Member");
-            }
-
+            set { _member.Entity = value; }
         }
-
-        #endregion
     }
 }

@@ -70,17 +70,22 @@ namespace PhoneApp1
             // Create the database if it does not exist.
             using (PhoneAppContext db = new PhoneAppContext(DBConnectionString))
             {
-                if (db.DatabaseExists() == false)
+                if (db.DatabaseExists())
                 {
-                    db.CreateDatabase();
-                    Member testMember = new Member { MatNr = 1233, Surname = "Dundukov", Forename = "Eugen", Birthday = DateTime.Today };
-                    SubjectMember subjectMemberTemp = new SubjectMember();
-                    subjectMemberTemp.Member = testMember;
-                    db.Members.InsertOnSubmit(testMember);
-                    db.SubjectMembers.InsertOnSubmit(subjectMemberTemp);
-
-                    db.SubmitChanges();
+                    db.DeleteDatabase();
                 }
+                db.CreateDatabase();
+
+                Member mem_1 = new Member { MatNr = 123, Surname = "Dundukov", Forename = "Eugen", Birthday = DateTime.Today.AddYears(-27) };
+                db.Members.InsertOnSubmit(mem_1);
+                
+                Subject sub_1 = new Subject { Name = "Künstliche Intelligenz", BeginDate = DateTime.Today.AddMonths(-2), EndDate = DateTime.Today.AddMonths(1) };
+                db.Subjects.InsertOnSubmit(sub_1);
+
+                SubjectMember submem_1 = new SubjectMember { Member = mem_1, Subject = sub_1 };
+                db.SubjectMembers.InsertOnSubmit(submem_1);
+
+                db.SubmitChanges();
             }
 
             // Create the ViewModel object.
