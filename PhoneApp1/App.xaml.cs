@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneApp1.Resources;
+using System.Linq;
 
 using PhoneApp1.Models;
 using PhoneApp1.ViewModel;
@@ -76,14 +77,6 @@ namespace PhoneApp1
                 }
                 db.CreateDatabase();
 
-                Member mem_1 = new Member { MatNr = 123, Surname = "Dundukov", Forename = "Eugen", Birthday = DateTime.Today.AddYears(-27) };
-                db.Members.InsertOnSubmit(mem_1);
-                
-                Subject sub_1 = new Subject { Name = "Künstliche Intelligenz", BeginDate = DateTime.Today.AddMonths(-2), EndDate = DateTime.Today.AddMonths(1) };
-                db.Subjects.InsertOnSubmit(sub_1);
-
-                SubjectMember submem_1 = new SubjectMember { Member = mem_1, Subject = sub_1 };
-                db.SubjectMembers.InsertOnSubmit(submem_1);
 
                 db.SubmitChanges();
             }
