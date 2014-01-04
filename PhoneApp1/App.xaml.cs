@@ -65,11 +65,8 @@ namespace PhoneApp1
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            // Specify the local database connection string.
-            string DBConnectionString = "Data Source=isostore:/PhoneApp1.sdf";
-
             // Create the database if it does not exist.
-            using (PhoneAppContext db = new PhoneAppContext(DBConnectionString))
+            using (PhoneAppContext db = DataContextFactory.GetDataContext())
             {
                 if (db.DatabaseExists())
                 {
@@ -77,12 +74,33 @@ namespace PhoneApp1
                 }
                 db.CreateDatabase();
 
-
+                Subject kiSubject = new Subject { Name = "KI", BeginDate = DateTime.Today, EndDate = DateTime.Today };
+                Member eugenMember = new Member { Surname = "Dundukov", Forename = "Eugen", Birthday = DateTime.Today, MatNr = 123 };
+                Member katjaMember = new Member { Surname = "Yurdik", Forename = "Katja", Birthday = DateTime.Today, MatNr = 222 };
+                db.Subjects.InsertOnSubmit(kiSubject);
+                db.Members.InsertOnSubmit(eugenMember);
+                db.Members.InsertOnSubmit(katjaMember);
                 db.SubmitChanges();
+
+                kiSubject.Members.Add(eugenMember);
+                katjaMember.Subjects.Add(kiSubject);
+                db.SubmitChanges();
+
+                //Debug.WriteLine("===============================================");
+                //foreach (Subject s in db.Subjects)
+                //{
+                //    Debug.WriteLine("Subject {0}: ", s.Name);
+                //    foreach (Member m in s.Members)
+                //    {
+                //        Debug.WriteLine("Member {0}, {1}", m.Surname, m.Forename);
+                //    }
+                //}
+                //Debug.WriteLine("===============================================");
+
             }
 
             // Create the ViewModel object.
-            viewModel = new PhoneAppViewModel(DBConnectionString);
+            viewModel = new PhoneAppViewModel();
 
             // Query the local database and load observable collections.
             viewModel.LoadCollectionsFromDatabase();

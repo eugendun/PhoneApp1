@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
@@ -11,6 +13,16 @@ using System.Linq;
 
 namespace PhoneApp1.Models
 {
+    public class DataContextFactory
+    {
+        private static string _connectionString = "Data Source=isostore:/PhoneApp1.sdf";
+
+        public static PhoneAppContext GetDataContext()
+        {
+            return new PhoneAppContext(_connectionString); ;
+        }
+    }
+
     public class PhoneAppContext : DataContext
     {
         public Table<Member> Members;
@@ -18,6 +30,20 @@ namespace PhoneApp1.Models
         private Table<SubjectMember> SubjectMembers;
 
         public PhoneAppContext(string connectionString) : base(connectionString) { }
+
+        public static void RemoveRecord<T>(T recordToRemove) where T : class
+        {
+            PhoneAppContext dataContext = DataContextFactory.GetDataContext();
+
+            Table<T> tableData = dataContext.GetTable<T>();
+            var deleteRecord = tableData.SingleOrDefault(record => record == recordToRemove);
+            if (deleteRecord != null)
+            {
+                tableData.DeleteOnSubmit(deleteRecord);
+            }
+
+            dataContext.SubmitChanges();
+        }
     }
 
     public class NotifyingModel : INotifyPropertyChanged, INotifyPropertyChanging
@@ -132,7 +158,45 @@ namespace PhoneApp1.Models
 
         public ICollection<Subject> Subjects
         {
-            get { return (from sm in SubjectMembers select sm.Subject).ToList(); }
+            get
+            {
+                var subjects = new ObservableCollection<Subject>(from sm in SubjectMembers select sm.Subject);
+                subjects.CollectionChanged += SubjectCollectionChanged;
+                return subjects;
+            }
+        }
+
+        private void SubjectCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (NotifyCollectionChangedAction.Add == e.Action)
+            {
+                foreach (Subject addedSubject in e.NewItems)
+                {
+                    OnSubjectAdded(addedSubject);
+                }
+            }
+
+            if (NotifyCollectionChangedAction.Remove == e.Action)
+            {
+                foreach (Subject removedSubject in e.OldItems)
+                {
+                    OnSubjectRemoved(removedSubject);
+                }
+            }
+        }
+
+        private void OnSubjectRemoved(Subject removedSubject)
+        {
+            SubjectMember sm = SubjectMembers.SingleOrDefault(record => record.Member == this && record.Subject == removedSubject);
+            if (sm != null)
+            {
+                sm.Remove();
+            }
+        }
+
+        private void OnSubjectAdded(Subject addedSubject)
+        {
+            SubjectMember sm = new SubjectMember() { Member = this, Subject = addedSubject };
         }
     }
 
@@ -200,7 +264,45 @@ namespace PhoneApp1.Models
 
         public ICollection<Member> Members
         {
-            get { return (from sb in SubjectMembers select sb.Member).ToList(); }
+            get
+            {
+                var members = new ObservableCollection<Member>(from sm in SubjectMembers select sm.Member);
+                members.CollectionChanged += MembersCollectionChanged;
+                return members;
+            }
+        }
+
+        private void MembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (NotifyCollectionChangedAction.Add == e.Action)
+            {
+                foreach (Member addedMember in e.NewItems)
+                {
+                    OnMemberAdded(addedMember);
+                }
+            }
+
+            if (NotifyCollectionChangedAction.Remove == e.Action)
+            {
+                foreach (Member removedMember in e.OldItems)
+                {
+                    OnMemberRemoved(removedMember);
+                }
+            }
+        }
+
+        private void OnMemberAdded(Member newMember)
+        {
+            SubjectMember newSubjectMember = new SubjectMember() { Member = newMember, Subject = this };
+        }
+
+        private void OnMemberRemoved(Member memberToRemove)
+        {
+            SubjectMember subjectMemberToRemove = SubjectMembers.SingleOrDefault(sm => sm.Member == memberToRemove && sm.Subject == this);
+            if (subjectMemberToRemove != null)
+            {
+                subjectMemberToRemove.Remove();
+            }
         }
     }
 
@@ -260,6 +362,17 @@ namespace PhoneApp1.Models
                     newMember.SubjectMembers.Add(this);
                 }
             }
+        }
+
+        public void Remove()
+        {
+            PhoneAppContext.RemoveRecord(this);
+
+            Subject priorSubject = Subject;
+            priorSubject.SubjectMembers.Remove(this);
+
+            Member priorMember = Member;
+            priorSubject.SubjectMembers.Remove(this);
         }
     }
 }

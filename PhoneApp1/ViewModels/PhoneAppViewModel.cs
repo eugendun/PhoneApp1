@@ -12,9 +12,9 @@ namespace PhoneApp1.ViewModel
     {
         private PhoneAppContext phoneAppDB;
 
-        public PhoneAppViewModel(string phoneAppDBConnectionString)
+        public PhoneAppViewModel()
         {
-            phoneAppDB = new PhoneAppContext(phoneAppDBConnectionString);
+            phoneAppDB = DataContextFactory.GetDataContext();
         }
 
         public void SaveChangesToDB()
