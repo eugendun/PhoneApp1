@@ -25,8 +25,6 @@ namespace PhoneApp1
             var button = sender as Button;
             if (button != null)
             {
-                Member memberForDelete = button.DataContext as Member;
-                App.ViewModel.DeleteMember(memberForDelete);
             }
             this.Focus();
         }
@@ -53,7 +51,6 @@ namespace PhoneApp1
             string forename = ForenameTextBox.Text;
             DateTime birthday = BirthdayDatePicker.Value.GetValueOrDefault(DateTime.Today);
 
-            App.ViewModel.AddMember(new Member { Surname = surname, Forename = forename, MatNr = matnr, Birthday = birthday });
         }
 
         private void NewMemberCancelButton_Click(object sender, RoutedEventArgs e)

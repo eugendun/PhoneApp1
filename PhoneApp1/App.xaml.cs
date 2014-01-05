@@ -65,58 +65,26 @@ namespace PhoneApp1
 
             // Create the database if it does not exist.
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                if (db.DatabaseExists())
-                    db.DeleteDatabase();
+                //if (db.DatabaseExists())
+                //    db.DeleteDatabase();
 
-                if (!db.DatabaseExists())
-                    db.CreateDatabase();
+                //if (!db.DatabaseExists())
+                //    db.CreateDatabase();
 
-                Subject kiSubject = new Subject { Name = "KI", BeginDate = DateTime.Today, EndDate = DateTime.Today };
-                Member eugenMember = new Member { Surname = "Dundukov", Forename = "Eugen", Birthday = DateTime.Today, MatNr = 123 };
-                Member katjaMember = new Member { Surname = "Yurdik", Forename = "Katja", Birthday = DateTime.Today, MatNr = 222 };
 
-                eugenMember.Subjects.Add(kiSubject);
-                katjaMember.Subjects.Add(kiSubject);
-
-                db.Members.InsertOnSubmit(eugenMember);
-                db.Members.InsertOnSubmit(katjaMember);
-                db.SubmitChanges();
+                //db.SubmitChanges();
             }
 
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                Debug.WriteLine("");
-                foreach (Subject s in db.Subjects) {
-                    Debug.WriteLine("Subject {0}", s.Name);
-                    foreach (Member m in s.Members) {
-                        Debug.WriteLine("Member {0}, {1}", m.Surname, m.Forename);
-                    }
-                }
-                Debug.WriteLine("=====");
-                Debug.WriteLine("");
 
-                Member toRemove = db.Members.SingleOrDefault(m => m.MatNr==222);
-                if (toRemove!=null) {
-                    db.Members.DeleteOnSubmit(toRemove);
-                    db.SubmitChanges();
-                }
-
-                Debug.WriteLine("");
-                foreach (Subject s in db.Subjects) {
-                    Debug.WriteLine("Subject {0}", s.Name);
-                    foreach (Member m in s.Members) {
-                        Debug.WriteLine("Member {0}, {1}", m.Surname, m.Forename);
-                    }
-                }
-                Debug.WriteLine("=====");
-                Debug.WriteLine("");
 
             }
 
             // Create the ViewModel object.
-            viewModel = new PhoneAppViewModel();
+            //viewModel = new PhoneAppViewModel();
 
             // Query the local database and load observable collections.
-            viewModel.LoadCollectionsFromDatabase();
+            //viewModel.LoadCollectionsFromDatabase();
         }
 
         // Code to execute when the application is launching (eg, from Start)
