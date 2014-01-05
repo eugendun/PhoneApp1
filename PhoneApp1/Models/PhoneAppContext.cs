@@ -129,9 +129,19 @@ namespace PhoneApp1.Models
             set { _lectureTimes.Assign(value); }
         }
 
+        private EntitySet<LectureTutor> _lectureTutor;
+        [Association(Name="FK_LectureTutors_Lectures", Storage="_lectureTutor", OtherKey="_lectureId", DeleteRule="CASCADE")]
+        private ICollection<LectureTutor> LectureTutors {
+            get { return _lectureTutor; }
+            set {
+                _lectureTutor.Assign(value);
+            }
+        }
+
         public Lecture() {
-            _exceptionDates=new EntitySet<ExceptionDate>(new Action<ExceptionDate>(OnAddExceptionDate), new Action<ExceptionDate>(OnRemoveExceptionDate));
-            _lectureTimes=new EntitySet<LectureTime>(new Action<LectureTime>(OnAddLectureTime), new Action<LectureTime>(OnRemoveLectureTime));
+            _exceptionDates = new EntitySet<ExceptionDate>(new Action<ExceptionDate>(OnAddExceptionDate), new Action<ExceptionDate>(OnRemoveExceptionDate));
+            _lectureTimes = new EntitySet<LectureTime>(new Action<LectureTime>(OnAddLectureTime), new Action<LectureTime>(OnRemoveLectureTime));
+            _lectureTutor = new EntitySet<LectureTutor>();
         }
 
         private void OnRemoveLectureTime(LectureTime obj) {
@@ -270,6 +280,51 @@ namespace PhoneApp1.Models
             set {
                 if (_forename!=value) {
                     _forename=value;
+                }
+            }
+        }
+
+        private EntitySet<LectureTutor> _lectureTutors;
+        [Association(Name="FK_LectureTutors_Tutors", Storage="_lectureTutors", OtherKey="_tutorId")]
+        private ICollection<LectureTutor> LectureTutors {
+            get { return _lectureTutors; }
+            set {
+                _lectureTutors.Assign(value);
+            }
+        }
+
+        public Tutor() {
+            _lectureTutors = new EntitySet<LectureTutor>();
+        }
+    }
+
+    [Table(Name="LectureTutors")]
+    public class LectureTutor
+    {
+        [Column(Name="LectureId", IsPrimaryKey=true)]
+        private int _lectureId;
+
+        private EntityRef<Lecture> _lecture;
+        [Association(Name="FK_LectureTutors_Lectures", Storage="_lecture", IsForeignKey=true, ThisKey="_lectureId")]
+        public Lecture Lecture {
+            get { return _lecture.Entity; }
+            set {
+                if (_lecture.Entity!=value) {
+                    _lecture.Entity = value;
+                }
+            }
+        }
+
+        [Column(Name="TutorId", IsPrimaryKey=true)]
+        private int _tutorId;
+
+        private EntityRef<Tutor> _tutor;
+        [Association(Name="FK_LectureTutors_Tutors", Storage="_tutor", IsForeignKey=true, ThisKey="_tutorId")]
+        public Tutor Tutor {
+            get { return _tutor.Entity; }
+            set {
+                if (_tutor.Entity!=value) {
+                    _tutor.Entity=value;
                 }
             }
         }
