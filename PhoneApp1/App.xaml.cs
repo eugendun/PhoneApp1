@@ -65,23 +65,44 @@ namespace PhoneApp1
 
             // Create the database if it does not exist.
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                //if (db.DatabaseExists())
-                //    db.DeleteDatabase();
+                if (db.DatabaseExists())
+                    db.DeleteDatabase();
 
-                //if (!db.DatabaseExists())
-                //    db.CreateDatabase();
+                if (!db.DatabaseExists())
+                    db.CreateDatabase();
 
 
-                //db.SubmitChanges();
+                Lecture ki = new Lecture { Name="KI", BeginDate=DateTime.Today, EndDate=DateTime.Today };
+                ExceptionDate exd = new ExceptionDate { Date=DateTime.Today };
+                ki.ExceptionDates.Add(exd);
+
+                db.Lectures.InsertOnSubmit(ki);
+
+                db.SubmitChanges();
             }
 
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
+                Lecture ki = db.Lectures.Single(s => s.Name=="KI");
+                ExceptionDate exd = ki.ExceptionDates.First();
+                ki.ExceptionDates.Remove(exd);
 
-
+                foreach (Lecture s in db.Lectures) {
+                    Debug.WriteLine("Subject {0}:{1}", s.Id, s.Name);
+                    foreach (ExceptionDate d in s.ExceptionDates) {
+                        Debug.WriteLine("no lesson on: {0}", d.Date);
+                    }
+                }
+                foreach (ExceptionDate d in db.ExceptionDates) {
+                    string str = string.Format("Exception date: {0}", d.Date.ToShortDateString());
+                    if (d.Lecture!=null) {
+                        str = string.Format("{0} (Subjects:{1})", str, d.Lecture.Name);
+                    }
+                    Debug.WriteLine(str);
+                }
             }
 
             // Create the ViewModel object.
-            //viewModel = new PhoneAppViewModel();
+            viewModel = new PhoneAppViewModel();
 
             // Query the local database and load observable collections.
             //viewModel.LoadCollectionsFromDatabase();
