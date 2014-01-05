@@ -12,13 +12,11 @@ namespace PhoneApp1.ViewModel
     {
         private PhoneAppContext phoneAppDB;
 
-        public PhoneAppViewModel()
-        {
+        public PhoneAppViewModel() {
             phoneAppDB = DataContextFactory.GetDataContext();
         }
 
-        public void SaveChangesToDB()
-        {
+        public void SaveChangesToDB() {
             phoneAppDB.SubmitChanges();
         }
 
@@ -26,18 +24,15 @@ namespace PhoneApp1.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
+        private void NotifyPropertyChanged(string propertyName) {
+            if (PropertyChanged != null) {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
         #endregion
 
-        public void LoadCollectionsFromDatabase()
-        {
+        public void LoadCollectionsFromDatabase() {
             var membersInDB = from Member m in phoneAppDB.Members
                               select m;
 
@@ -52,18 +47,15 @@ namespace PhoneApp1.ViewModel
         #region Members
 
         private ObservableCollection<Member> _members;
-        public ObservableCollection<Member> Members
-        {
+        public ObservableCollection<Member> Members {
             get { return _members; }
-            set
-            {
+            set {
                 _members = value;
                 NotifyPropertyChanged("Members");
             }
         }
 
-        public void AddMember(Member newMember)
-        {
+        public void AddMember(Member newMember) {
             // add member to the database
             phoneAppDB.Members.InsertOnSubmit(newMember);
             phoneAppDB.SubmitChanges();
@@ -72,8 +64,11 @@ namespace PhoneApp1.ViewModel
             Members.Add(newMember);
         }
 
-        public void DeleteMember(Member memberForDelete)
-        {
+        public void DeleteMember(Member memberForDelete) {
+            //foreach (Subject s in memberForDelete.Subjects) {
+            //    s.Members.Remove(memberForDelete);
+            //}
+
             // remove member from the observable collection
             Members.Remove(memberForDelete);
 
@@ -87,26 +82,22 @@ namespace PhoneApp1.ViewModel
         #region Subjects
 
         private ObservableCollection<Subject> _subjects;
-        public ObservableCollection<Subject> Subjects
-        {
+        public ObservableCollection<Subject> Subjects {
             get { return _subjects; }
-            set
-            {
+            set {
                 _subjects = value;
                 NotifyPropertyChanged("Subjects");
             }
         }
 
-        public void AddSubject(Subject newSubject)
-        {
+        public void AddSubject(Subject newSubject) {
             phoneAppDB.Subjects.InsertOnSubmit(newSubject);
             phoneAppDB.SubmitChanges();
 
             Subjects.Add(newSubject);
         }
 
-        public void DeleteSubject(Subject subjectToDelete)
-        {
+        public void DeleteSubject(Subject subjectToDelete) {
             Subjects.Remove(subjectToDelete);
 
             phoneAppDB.Subjects.DeleteOnSubmit(subjectToDelete);
@@ -114,5 +105,7 @@ namespace PhoneApp1.ViewModel
         }
 
         #endregion
+
+
     }
 }
