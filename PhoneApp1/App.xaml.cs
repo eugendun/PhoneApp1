@@ -73,8 +73,9 @@ namespace PhoneApp1
 
 
                 Lecture ki = new Lecture { Name="KI", BeginDate=DateTime.Today, EndDate=DateTime.Today };
-                ExceptionDate exd = new ExceptionDate { Date=DateTime.Today };
-                ki.ExceptionDates.Add(exd);
+                Tutor t1 = new Tutor { Surname="Dundukov", Forename="Eugen" };
+                //ki.LectureTutors.Add(new LectureTutor { Lecture=ki, Tutor=t1 });
+                ki.Tutors.Add(t1);
 
                 db.Lectures.InsertOnSubmit(ki);
 
@@ -83,21 +84,19 @@ namespace PhoneApp1
 
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
                 Lecture ki = db.Lectures.Single(s => s.Name=="KI");
-                ExceptionDate exd = ki.ExceptionDates.First();
-                ki.ExceptionDates.Remove(exd);
+                Tutor toRemove = ki.Tutors.First();
+                ki.Tutors.Remove(toRemove);
+                db.SubmitChanges();
+                //var rem = db.Lectures.Single(s => s.Name=="KI");
+                //db.Lectures.DeleteOnSubmit(rem);
+                //db.SubmitChanges();
 
-                foreach (Lecture s in db.Lectures) {
-                    Debug.WriteLine("Subject {0}:{1}", s.Id, s.Name);
-                    foreach (ExceptionDate d in s.ExceptionDates) {
-                        Debug.WriteLine("no lesson on: {0}", d.Date);
-                    }
+                foreach (Lecture lec in db.Lectures) {
+                    Debug.WriteLine("Lecture: {0} has {1} tutors", lec.Name, lec.Tutors.Count());
                 }
-                foreach (ExceptionDate d in db.ExceptionDates) {
-                    string str = string.Format("Exception date: {0}", d.Date.ToShortDateString());
-                    if (d.Lecture!=null) {
-                        str = string.Format("{0} (Subjects:{1})", str, d.Lecture.Name);
-                    }
-                    Debug.WriteLine(str);
+
+                foreach (Tutor tut in db.Tutors) {
+                    Debug.WriteLine("Tutor: {0}, {1} teaches in {2} lectures", tut.Surname, tut.Forename, tut.Lectures.Count());
                 }
             }
 

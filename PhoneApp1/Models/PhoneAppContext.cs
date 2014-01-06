@@ -28,6 +28,9 @@ namespace PhoneApp1.Models
     {
         public Table<Lecture> Lectures;
         public Table<ExceptionDate> ExceptionDates;
+        public Table<Tutor> Tutors;
+
+        private Table<LectureTutor> LectureTutors;
 
         public PhoneAppContext(string connectionString) : base(connectionString) { }
 
@@ -136,6 +139,37 @@ namespace PhoneApp1.Models
             set {
                 _lectureTutor.Assign(value);
             }
+        }
+
+        public ICollection<Tutor> Tutors {
+            get {
+                var lectures = new ObservableCollection<Tutor>(from lt in LectureTutors select lt.Tutor);
+                lectures.CollectionChanged += OnTutorsCollectionChanged;
+                return lectures;
+            }
+        }
+
+        private void OnTutorsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action==NotifyCollectionChangedAction.Add) {
+                foreach (Tutor addedTutor in e.NewItems) {
+                    LectureTutors.Add(new LectureTutor { Lecture=this, Tutor=addedTutor });
+                }
+            }
+
+            if (e.Action==NotifyCollectionChangedAction.Remove) {
+                foreach (Tutor removedTutor in e.OldItems) {
+                    var affectedLectureTutors = from lt in LectureTutors
+                                        where lt.Tutor==removedTutor
+                                        select lt;
+                    foreach (LectureTutor lectureTutorToRemove in affectedLectureTutors) {
+                        lectureTutorToRemove.Lecture=null;
+                    }
+                }
+            }
+        }
+
+        private void remtest() {
+
         }
 
         public Lecture() {
@@ -285,12 +319,16 @@ namespace PhoneApp1.Models
         }
 
         private EntitySet<LectureTutor> _lectureTutors;
-        [Association(Name="FK_LectureTutors_Tutors", Storage="_lectureTutors", OtherKey="_tutorId")]
+        [Association(Name="FK_LectureTutors_Tutors", Storage="_lectureTutors", OtherKey="_tutorId", DeleteRule="CASCADE")]
         private ICollection<LectureTutor> LectureTutors {
             get { return _lectureTutors; }
             set {
                 _lectureTutors.Assign(value);
             }
+        }
+
+        public ICollection<Lecture> Lectures {
+            get { return (from lt in LectureTutors select lt.Lecture).ToList(); }
         }
 
         public Tutor() {
@@ -305,7 +343,7 @@ namespace PhoneApp1.Models
         private int _lectureId;
 
         private EntityRef<Lecture> _lecture;
-        [Association(Name="FK_LectureTutors_Lectures", Storage="_lecture", IsForeignKey=true, ThisKey="_lectureId")]
+        [Association(Name="FK_LectureTutors_Lectures", Storage="_lecture", IsForeignKey=true, ThisKey="_lectureId", DeleteOnNull=true)]
         public Lecture Lecture {
             get { return _lecture.Entity; }
             set {
@@ -319,7 +357,7 @@ namespace PhoneApp1.Models
         private int _tutorId;
 
         private EntityRef<Tutor> _tutor;
-        [Association(Name="FK_LectureTutors_Tutors", Storage="_tutor", IsForeignKey=true, ThisKey="_tutorId")]
+        [Association(Name="FK_LectureTutors_Tutors", Storage="_tutor", IsForeignKey=true, ThisKey="_tutorId", DeleteOnNull=true)]
         public Tutor Tutor {
             get { return _tutor.Entity; }
             set {
