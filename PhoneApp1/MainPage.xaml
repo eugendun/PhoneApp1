@@ -60,7 +60,7 @@
 				<Button Content="Veranstaltung" Click="Button_Click">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/SubjectView.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Views/LecturesView.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>

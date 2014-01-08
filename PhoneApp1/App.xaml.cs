@@ -83,14 +83,6 @@ namespace PhoneApp1
             }
 
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                Lecture ki = db.Lectures.Single(s => s.Name=="KI");
-                Tutor toRemove = ki.Tutors.First();
-                ki.Tutors.Remove(toRemove);
-                db.SubmitChanges();
-                //var rem = db.Lectures.Single(s => s.Name=="KI");
-                //db.Lectures.DeleteOnSubmit(rem);
-                //db.SubmitChanges();
-
                 foreach (Lecture lec in db.Lectures) {
                     Debug.WriteLine("Lecture: {0} has {1} tutors", lec.Name, lec.Tutors.Count());
                 }
@@ -102,9 +94,6 @@ namespace PhoneApp1
 
             // Create the ViewModel object.
             viewModel = new PhoneAppViewModel();
-
-            // Query the local database and load observable collections.
-            //viewModel.LoadCollectionsFromDatabase();
         }
 
         // Code to execute when the application is launching (eg, from Start)

@@ -17,7 +17,7 @@ namespace PhoneApp1
         public MembersView()
         {
             InitializeComponent();
-            this.DataContext = App.ViewModel;
+            //this.DataContext = App.ViewModel;
         }
 
         private void DeleteMemberButton_Click(object sender, RoutedEventArgs e)

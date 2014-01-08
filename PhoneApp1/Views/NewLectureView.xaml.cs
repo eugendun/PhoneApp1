@@ -8,14 +8,12 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace PhoneApp1
+namespace PhoneApp1.Views
 {
-    public partial class SubjectView : PhoneApplicationPage
+    public partial class NewLectureView : PhoneApplicationPage
     {
-        public SubjectView()
-        {
+        public NewLectureView() {
             InitializeComponent();
-            //this.DataContext = App.ViewModel;
         }
     }
 }

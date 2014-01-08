@@ -143,9 +143,9 @@ namespace PhoneApp1.Models
 
         public ICollection<Tutor> Tutors {
             get {
-                var lectures = new ObservableCollection<Tutor>(from lt in LectureTutors select lt.Tutor);
-                lectures.CollectionChanged += OnTutorsCollectionChanged;
-                return lectures;
+                var tutors = new ObservableCollection<Tutor>(from lt in LectureTutors select lt.Tutor);
+                tutors.CollectionChanged += OnTutorsCollectionChanged;
+                return tutors;
             }
         }
 
@@ -159,17 +159,13 @@ namespace PhoneApp1.Models
             if (e.Action==NotifyCollectionChangedAction.Remove) {
                 foreach (Tutor removedTutor in e.OldItems) {
                     var affectedLectureTutors = from lt in LectureTutors
-                                        where lt.Tutor==removedTutor
-                                        select lt;
+                                                where lt.Tutor==removedTutor
+                                                select lt;
                     foreach (LectureTutor lectureTutorToRemove in affectedLectureTutors) {
-                        lectureTutorToRemove.Lecture=null;
+                        lectureTutorToRemove.Tutor = null;
                     }
                 }
             }
-        }
-
-        private void remtest() {
-
         }
 
         public Lecture() {
@@ -328,7 +324,29 @@ namespace PhoneApp1.Models
         }
 
         public ICollection<Lecture> Lectures {
-            get { return (from lt in LectureTutors select lt.Lecture).ToList(); }
+            get {
+                var lectures = new ObservableCollection<Lecture>(from lt in LectureTutors select lt.Lecture);
+                lectures.CollectionChanged += OnLecturesCollectionChanged;
+                return lectures;
+            }
+        }
+
+        private void OnLecturesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action==NotifyCollectionChangedAction.Add) {
+                foreach (Lecture addedLecture in e.NewItems) {
+                    LectureTutors.Add(new LectureTutor { Lecture=addedLecture, Tutor=this });
+                }
+            }
+            if (e.Action==NotifyCollectionChangedAction.Remove) {
+                foreach (Lecture removedLecture in e.OldItems) {
+                    var affectedLectureTutors = from lt in LectureTutors
+                                                where lt.Lecture==removedLecture
+                                                select lt;
+                    foreach (LectureTutor lectureTutorToRemove in affectedLectureTutors) {
+                        lectureTutorToRemove.Lecture = null;
+                    }
+                }
+            }
         }
 
         public Tutor() {

@@ -124,6 +124,12 @@
       <DependentUpon>SubjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PhoneAppViewModel.cs" />
+    <Compile Include="Views\LecturesView.xaml.cs">
+      <DependentUpon>LecturesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewLectureView.xaml.cs">
+      <DependentUpon>NewLectureView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -159,6 +165,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SubjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LecturesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewLectureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
