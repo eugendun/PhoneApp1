@@ -124,11 +124,23 @@
       <DependentUpon>SubjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PhoneAppViewModel.cs" />
+    <Compile Include="Views\FollowersView.xaml.cs">
+      <DependentUpon>FollowersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LecturesView.xaml.cs">
       <DependentUpon>LecturesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NewFollowerView.xaml.cs">
+      <DependentUpon>NewFollowerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewLectureView.xaml.cs">
       <DependentUpon>NewLectureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewTutorView.xaml.cs">
+      <DependentUpon>NewTutorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TutorsView.xaml.cs">
+      <DependentUpon>TutorsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -168,11 +180,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FollowersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LecturesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\NewFollowerView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\NewLectureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewTutorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TutorsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

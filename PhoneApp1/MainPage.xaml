@@ -67,7 +67,7 @@
 				<Button Content="Teilnehmer">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/MembersView.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Views/FollowersView.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>

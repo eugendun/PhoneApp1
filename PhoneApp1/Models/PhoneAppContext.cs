@@ -29,6 +29,7 @@ namespace PhoneApp1.Models
         public Table<Lecture> Lectures;
         public Table<ExceptionDate> ExceptionDates;
         public Table<Tutor> Tutors;
+        public Table<Follower> Followers;
 
         private Table<LectureTutor> LectureTutors;
 

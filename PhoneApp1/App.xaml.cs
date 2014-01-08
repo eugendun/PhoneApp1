@@ -65,11 +65,11 @@ namespace PhoneApp1
 
             // Create the database if it does not exist.
             using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                //if (db.DatabaseExists())
-                //    db.DeleteDatabase();
+                if (db.DatabaseExists())
+                    db.DeleteDatabase();
 
-                if (!db.DatabaseExists())
-                    db.CreateDatabase();
+                //if (!db.DatabaseExists())
+                db.CreateDatabase();
 
 
                 //Lecture ki = new Lecture { Name="KI", BeginDate=DateTime.Today, EndDate=DateTime.Today };
