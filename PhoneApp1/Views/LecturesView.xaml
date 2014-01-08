@@ -71,7 +71,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <phone:LongListSelector ItemsSource="{Binding Lectures}" ItemTemplate="{StaticResource LectureListItemTemplate}"/>
+            <phone:LongListSelector ItemsSource="{Binding Lectures}" ItemTemplate="{StaticResource LectureListItemTemplate}" />
         </Grid>
     </Grid>
 

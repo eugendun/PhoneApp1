@@ -20,7 +20,11 @@ namespace PhoneApp1.Models
         private static string _connectionString = "Data Source=isostore:/PhoneApp1.sdf";
 
         public static PhoneAppContext GetDataContext() {
-            return new PhoneAppContext(_connectionString); ;
+            var dbContext = new PhoneAppContext(_connectionString);
+            if (!dbContext.DatabaseExists()) {
+                dbContext.CreateDatabase();
+            }
+            return dbContext;
         }
     }
 

@@ -63,35 +63,6 @@ namespace PhoneApp1
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            // Create the database if it does not exist.
-            using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-                if (db.DatabaseExists())
-                    db.DeleteDatabase();
-
-                //if (!db.DatabaseExists())
-                db.CreateDatabase();
-
-
-                //Lecture ki = new Lecture { Name="KI", BeginDate=DateTime.Today, EndDate=DateTime.Today };
-                //Tutor t1 = new Tutor { Surname="Dundukov", Forename="Eugen" };
-                ////ki.LectureTutors.Add(new LectureTutor { Lecture=ki, Tutor=t1 });
-                //ki.Tutors.Add(t1);
-
-                //db.Lectures.InsertOnSubmit(ki);
-
-                //db.SubmitChanges();
-            }
-
-            //using (PhoneAppContext db = DataContextFactory.GetDataContext()) {
-            //    foreach (Lecture lec in db.Lectures) {
-            //        Debug.WriteLine("Lecture: {0} has {1} tutors", lec.Name, lec.Tutors.Count());
-            //    }
-
-            //    foreach (Tutor tut in db.Tutors) {
-            //        Debug.WriteLine("Tutor: {0}, {1} teaches in {2} lectures", tut.Surname, tut.Forename, tut.Lectures.Count());
-            //    }
-            //}
-
             // Create the ViewModel object.
             viewModel = new PhoneAppViewModel();
         }
