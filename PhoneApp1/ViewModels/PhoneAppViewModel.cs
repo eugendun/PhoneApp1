@@ -5,6 +5,8 @@ using System.Linq;
 
 using PhoneApp1.Models;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System;
 
 namespace PhoneApp1.ViewModel
 {
@@ -16,9 +18,20 @@ namespace PhoneApp1.ViewModel
             phoneAppDB = DataContextFactory.GetDataContext();
             Lectures = new ObservableCollection<Lecture>(phoneAppDB.Lectures.ToList());
             Tutors = new ObservableCollection<Tutor>(phoneAppDB.Tutors.ToList());
+            Lectures.CollectionChanged += OnLecturesCollectionChanged;
         }
 
-        public void SaveChangesToDB() {
+        private void OnLecturesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action==NotifyCollectionChangedAction.Add) {
+                foreach (Lecture addedLecture in e.NewItems) {
+                    phoneAppDB.Lectures.InsertOnSubmit(addedLecture);
+                }
+            }
+            if (e.Action==NotifyCollectionChangedAction.Remove) {
+                foreach (Lecture removedLecture in e.OldItems) {
+                    phoneAppDB.Lectures.DeleteOnSubmit(removedLecture);
+                }
+            }
             phoneAppDB.SubmitChanges();
         }
 

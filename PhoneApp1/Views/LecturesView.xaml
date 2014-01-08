@@ -16,27 +16,39 @@
     <phone:PhoneApplicationPage.Resources>
         <DataTemplate x:Name="LectureListItemTemplate">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0"  Orientation="Vertical">
+                <StackPanel Grid.Column="0" Grid.Row="0"  Orientation="Vertical">
                     <TextBlock Text="{Binding Name}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Text="("/>
                     <TextBlock Text="{Binding BeginDate}"/>
                     <TextBlock Text="-"/>
                     <TextBlock Text="{Binding EndDate}"/>
                     <TextBlock Text=")"/>
                 </StackPanel>
-                
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
+
+                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
                     <TextBlock Text="Tutoren:"/>
                 </StackPanel>
+
+                <Button Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
+                        x:Name="DeleteLectureButton"
+                        BorderThickness="0" Padding="5" Click="OnClick_DeleteLectureButton">
+                    <Image
+                        Height="75"
+                        Width="75" Source="/Toolkit.Content/ApplicationBar.Delete.png"/>
+                </Button>
             </Grid>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>

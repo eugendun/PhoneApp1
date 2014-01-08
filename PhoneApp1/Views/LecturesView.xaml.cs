@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 
 using PhoneApp1.ViewModel;
 using System.Diagnostics;
+using PhoneApp1.Models;
 
 namespace PhoneApp1.Views
 {
@@ -22,6 +23,15 @@ namespace PhoneApp1.Views
 
         private void OnClick_AddLectureBarIconButton(object sender, EventArgs e) {
             NavigationService.Navigate(new Uri("/Views/NewLectureView.xaml", UriKind.Relative));
+        }
+
+        private void OnClick_DeleteLectureButton(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            if (button!=null) {
+                Lecture lectureToRemove = button.DataContext as Lecture;
+                App.ViewModel.Lectures.Remove(lectureToRemove);
+            }
+            this.Focus();
         }
     }
 }

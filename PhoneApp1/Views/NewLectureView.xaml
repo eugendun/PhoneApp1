@@ -27,8 +27,8 @@
             <TextBlock Text="Veranstaltung" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
         <StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
-            <TextBox Height="72" TextWrapping="Wrap" Text="Veranstaltungsname"/>
-            <toolkit:DatePicker x:Name="BeginDate" />
+            <TextBox Height="72" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay}"/>
+            <toolkit:DatePicker x:Name="BeginDate" Value="{Binding BeginDate, Mode=TwoWay}" />
             <toolkit:DatePicker x:Name="EndDate" />
             <StackPanel Orientation="Horizontal">
                 <CheckBox Content="Montag" VerticalAlignment="Center"/>
@@ -42,4 +42,16 @@
         <!--ContentPanel - place additional content here-->
     </Grid>
 
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton 
+                IconUri="/Toolkit.Content/ApplicationBar.Check.png"
+                Text="check"
+                x:Name="CheckNewMemberAppBarButton" Click="OnClick_CheckNewMemberAppBarButton"/>
+            <shell:ApplicationBarIconButton 
+                IconUri="/Toolkit.Content/ApplicationBar.Cancel.png"
+                Text="check"
+                x:Name="CancelNewMemberAppBarButton" Click="OnClick_CancelNewMemberAppBarButton"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
