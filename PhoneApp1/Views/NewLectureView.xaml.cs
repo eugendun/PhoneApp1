@@ -21,19 +21,21 @@ namespace PhoneApp1.Views
 
         public NewLectureView() {
             InitializeComponent();
+            var selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
+            if (selectedLecture!=null) {
+                _newLecture = selectedLecture;
+            }
             DataContext = _newLecture;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            base.OnNavigatedTo(e);
-        }
-
         private void OnClick_CheckNewMemberAppBarButton(object sender, EventArgs e) {
-            if (!App.ViewModel.Lectures.Contains(_newLecture) && _newLecture.Name!="Veranstaltungsname") {
-                App.ViewModel.Lectures.Add(_newLecture);
-                NavigationService.GoBack();
+            if (_newLecture.Name.Equals("Veranstaltungsname")) {
+                // TODO show message that invalid params given
             } else {
-                //TODO show as Message
+                if (!App.ViewModel.Lectures.Contains(_newLecture)) {
+                    App.ViewModel.Lectures.Add(_newLecture);
+                }
+                NavigationService.GoBack();
             }
         }
 
