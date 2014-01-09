@@ -22,8 +22,8 @@ namespace PhoneApp1.Views
             get { return _selectedLecture; }
             set {
                 _selectedLecture = value;
-                App.Current.Resources.Remove("SelectedLecture");
                 if (_selectedLecture!=null) {
+                    App.Current.Resources.Remove("SelectedLecture");
                     App.Current.Resources.Add("SelectedLecture", SelectedLecture);
                     EnableEditableApplicationBarButtons(true);
                 } else {
@@ -70,11 +70,6 @@ namespace PhoneApp1.Views
                 var button = ApplicationBar.Buttons[i] as ApplicationBarIconButton;
                 button.IsEnabled = isEnabled;
             }
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            SelectedLecture = null;
-            base.OnNavigatedTo(e);
         }
 
         private void OnClick_DetailsButton(object sender, System.EventArgs e) {

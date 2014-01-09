@@ -142,6 +142,7 @@
     <Compile Include="Views\NewTutorView.xaml.cs">
       <DependentUpon>NewTutorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ObservableCollection.cs" />
     <Compile Include="Views\TutorsView.xaml.cs">
       <DependentUpon>TutorsView.xaml</DependentUpon>
     </Compile>

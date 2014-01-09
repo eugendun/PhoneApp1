@@ -68,7 +68,7 @@
                 x:Name="AddLectureBarIconButton" Click="OnClick_AddLectureBarIconButton"/>
             <shell:ApplicationBarIconButton x:Name="EditButton" IconUri="/Assets/AppBar/edit.png" Text="bearbeiten" IsEnabled="False" Click="OnClick_EditButton"/>
             <shell:ApplicationBarIconButton x:Name="DeleteButton" IconUri="/Assets/AppBar/delete.png" Text="löschen" IsEnabled="False" Click="OnClick_DeleteButton"/>
-            <shell:ApplicationBarIconButton x:Name="DetailsButton" IconUri="/Toolkit.Content/ApplicationBar.Select.png" Text="Details" Click="OnClick_DetailsButton"/>
+            <shell:ApplicationBarIconButton x:Name="DetailsButton" IconUri="/Toolkit.Content/ApplicationBar.Select.png" Text="Details" Click="OnClick_DetailsButton" IsEnabled="False"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

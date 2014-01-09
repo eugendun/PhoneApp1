@@ -10,10 +10,29 @@ using System;
 
 namespace PhoneApp1.ViewModel
 {
-    public class PhoneAppViewModel : INotifyPropertyChanged
+    public class NotifyModel : INotifyPropertyChanged
     {
-        private PhoneAppContext phoneAppDB;
+        #region INotifyPropertyChanged
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propertyName) {
+            if (PropertyChanged != null) {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
+        public PhoneAppContext phoneAppDB;
+
+        public NotifyModel() {
+            phoneAppDB = DataContextFactory.GetDataContext();
+        }
+    }
+
+    public class PhoneAppViewModel : NotifyModel
+    {
         public PhoneAppViewModel() {
             phoneAppDB = DataContextFactory.GetDataContext();
             Lectures = new ObservableCollection<Lecture>(phoneAppDB.Lectures.ToList());
@@ -39,18 +58,6 @@ namespace PhoneApp1.ViewModel
             }
             phoneAppDB.SubmitChanges();
         }
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string propertyName) {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
 
         private ObservableCollection<Lecture> _lectures;
         public ObservableCollection<Lecture> Lectures {
