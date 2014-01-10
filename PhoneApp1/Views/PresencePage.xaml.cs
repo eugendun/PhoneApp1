@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace PhoneApp1
 {
-    public partial class Assessment : PhoneApplicationPage
+    public partial class PresencePage : PhoneApplicationPage
     {
-        public Assessment()
+        public PresencePage()
         {
             InitializeComponent();
         }

@@ -91,14 +91,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Allocation.xaml.cs">
-      <DependentUpon>Allocation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Assessment.xaml.cs">
-      <DependentUpon>Assessment.xaml</DependentUpon>
     </Compile>
     <Compile Include="Export.xaml.cs">
       <DependentUpon>Export.xaml</DependentUpon>
@@ -121,6 +115,9 @@
       <DependentUpon>SubjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PhoneAppViewModel.cs" />
+    <Compile Include="Views\AssessmentPage.xaml.cs">
+      <DependentUpon>AssessmentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FollowersView.xaml.cs">
       <DependentUpon>FollowersView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +140,9 @@
       <DependentUpon>NewTutorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ObservableCollection.cs" />
+    <Compile Include="Views\PresencePage.xaml.cs">
+      <DependentUpon>PresencePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectLecturePage.xaml.cs">
       <DependentUpon>SelectLecturePage.xaml</DependentUpon>
     </Compile>
@@ -158,14 +158,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Allocation.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Assessment.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Export.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -185,6 +177,10 @@
     <Page Include="SubjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssessmentPage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\FollowersView.xaml">
       <SubType>Designer</SubType>
@@ -213,6 +209,10 @@
     <Page Include="Views\NewTutorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PresencePage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SelectLecturePage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
