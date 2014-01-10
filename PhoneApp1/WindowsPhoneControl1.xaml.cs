@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace PhoneApp1
 {
-    public partial class Presence : PhoneApplicationPage
+    public partial class WindowsPhoneControl1 : UserControl
     {
-        public Presence()
+        public WindowsPhoneControl1()
         {
             InitializeComponent();
         }

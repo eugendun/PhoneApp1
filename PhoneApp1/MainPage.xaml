@@ -74,14 +74,14 @@
 				<Button Content="Zuordnung">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Allocation.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Views/SelectLecturePage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Anwesenheit">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Presence.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Views/SelectLecturePage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
