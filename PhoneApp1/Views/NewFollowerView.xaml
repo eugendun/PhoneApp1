@@ -1,0 +1,56 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    x:Class="PhoneApp1.NewFollowerView"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton x:Name="AddButton" IconUri="/Toolkit.Content/ApplicationBar.Check.png" Text="hinzufgen" Click="OnClick_AddButton"/>
+            <shell:ApplicationBarIconButton x:Name="CancelButton" IconUri="/Toolkit.Content/ApplicationBar.Cancel.png" Text="Abbrechen" Click="OnClick_CancelButton"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" d:IsLocked="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="TUTOR" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Teilnehmer" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel d:DesignWidth="478.163" d:DesignHeight="416.939">
+                <TextBox Height="72" TextWrapping="Wrap" Text="{Binding Surname, Mode=TwoWay}"/>
+                <TextBox Height="72" TextWrapping="Wrap" Text="{Binding Forename, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock TextWrapping="Wrap" Text="Geburtsdatum:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <toolkit:DatePicker VerticalAlignment="Center" Value="{Binding Birthday, Mode=TwoWay}"/>
+                </StackPanel>
+                <TextBox Height="72" TextWrapping="Wrap" Text="{Binding MatNr, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
