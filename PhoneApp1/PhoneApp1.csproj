@@ -112,23 +112,23 @@
     <Compile Include="Pages\AssessmentPage.xaml.cs">
       <DependentUpon>AssessmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MembersView.xaml.cs">
-      <DependentUpon>MembersView.xaml</DependentUpon>
+    <Compile Include="Pages\MembersPage.xaml.cs">
+      <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LectureDetailsPage.xaml.cs">
       <DependentUpon>LectureDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LecturesView.xaml.cs">
-      <DependentUpon>LecturesView.xaml</DependentUpon>
+    <Compile Include="Pages\LecturesPage.xaml.cs">
+      <DependentUpon>LecturesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MemberAssignmentPage.xaml.cs">
       <DependentUpon>MemberAssignmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MemberNewView.xaml.cs">
-      <DependentUpon>MemberNewView.xaml</DependentUpon>
+    <Compile Include="Pages\MemberNewPage.xaml.cs">
+      <DependentUpon>MemberNewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LectureNewView.xaml.cs">
-      <DependentUpon>LectureNewView.xaml</DependentUpon>
+    <Compile Include="Pages\LectureNewPage.xaml.cs">
+      <DependentUpon>LectureNewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TutorNewPage.xaml.cs">
       <DependentUpon>TutorNewPage.xaml</DependentUpon>
@@ -139,8 +139,8 @@
     <Compile Include="Pages\LectureSelectPage.xaml.cs">
       <DependentUpon>LectureSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TutorsView.xaml.cs">
-      <DependentUpon>TutorsView.xaml</DependentUpon>
+    <Compile Include="Pages\TutorsPage.xaml.cs">
+      <DependentUpon>TutorsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +164,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MembersView.xaml">
+    <Page Include="Pages\MembersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,7 +172,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\LecturesView.xaml">
+    <Page Include="Pages\LecturesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,11 +180,11 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MemberNewView.xaml">
+    <Page Include="Pages\MemberNewPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\LectureNewView.xaml">
+    <Page Include="Pages\LectureNewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +200,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\TutorsView.xaml">
+    <Page Include="Pages\TutorsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,9 +11,9 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1.Views
 {
-    public partial class TutorsView : PhoneApplicationPage
+    public partial class TutorsPage : PhoneApplicationPage
     {
-        public TutorsView() {
+        public TutorsPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
         }

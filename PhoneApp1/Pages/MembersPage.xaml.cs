@@ -10,16 +10,16 @@ using Microsoft.Phone.Shell;
 
 namespace PhoneApp1.Views
 {
-    public partial class MembersView : PhoneApplicationPage
+    public partial class MembersPage : PhoneApplicationPage
     {
-        public MembersView() {
+        public MembersPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
         }
 
         private void OnClick_AddMemberButton(object sender, System.EventArgs e)
         {
-        	NavigationService.Navigate(new Uri("/Pages/MemberNewView.xaml", UriKind.Relative));
+        	NavigationService.Navigate(new Uri("/Pages/MemberNewPage.xaml", UriKind.Relative));
         }
     }
 }

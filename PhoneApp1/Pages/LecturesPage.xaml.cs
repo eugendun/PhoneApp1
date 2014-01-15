@@ -14,7 +14,7 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1.Views
 {
-    public partial class LecturesView : PhoneApplicationPage
+    public partial class LecturesPage : PhoneApplicationPage
     {
 
         private Lecture _selectedLecture;
@@ -32,7 +32,7 @@ namespace PhoneApp1.Views
             }
         }
 
-        public LecturesView() {
+        public LecturesPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
         }
