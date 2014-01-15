@@ -13,7 +13,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 	<phone:PhoneApplicationPage.Resources>
-		<DataTemplate x:Key="AssessmentFollowerListItemTemplate">
+		<DataTemplate x:Key="AssessmentMemberListItemTemplate">
 			<Grid d:DesignWidth="460.816" d:DesignHeight="434.286" Height="144" Width="427">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -49,7 +49,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<phone:LongListSelector ItemTemplate="{StaticResource AssessmentFollowerListItemTemplate}"/>
+        	<phone:LongListSelector ItemTemplate="{StaticResource AssessmentMemberListItemTemplate}"/>
 
         </Grid>
     </Grid>

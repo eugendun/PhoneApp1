@@ -118,8 +118,8 @@
     <Compile Include="Views\AssessmentPage.xaml.cs">
       <DependentUpon>AssessmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FollowersView.xaml.cs">
-      <DependentUpon>FollowersView.xaml</DependentUpon>
+    <Compile Include="Views\MembersView.xaml.cs">
+      <DependentUpon>MembersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LectureDetailsPage.xaml.cs">
       <DependentUpon>LectureDetailsPage.xaml</DependentUpon>
@@ -130,8 +130,8 @@
     <Compile Include="Views\MemberAssignmentPage.xaml.cs">
       <DependentUpon>MemberAssignmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewFollowerView.xaml.cs">
-      <DependentUpon>NewFollowerView.xaml</DependentUpon>
+    <Compile Include="Views\NewMemberView.xaml.cs">
+      <DependentUpon>NewMemberView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewLectureView.xaml.cs">
       <DependentUpon>NewLectureView.xaml</DependentUpon>
@@ -182,7 +182,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FollowersView.xaml">
+    <Page Include="Views\MembersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,7 +198,7 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NewFollowerView.xaml">
+    <Page Include="Views\NewMemberView.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -16,56 +16,56 @@ namespace PhoneApp1
 {
     internal class MemberAssignmentViewModel : NotifyModel
     {
-        private ObservableCollection<Follower> _lecturesFollowers;
-        public ObservableCollection<Follower> LecturesFollowers {
-            get { return _lecturesFollowers; }
+        private ObservableCollection<Member> _lecturesMembers;
+        public ObservableCollection<Member> LecturesMembers {
+            get { return _lecturesMembers; }
             set {
-                if (_lecturesFollowers!=value) {
-                    _lecturesFollowers=value;
-                    NotifyPropertyChanged("LecturesFollowers");
+                if (_lecturesMembers!=value) {
+                    _lecturesMembers=value;
+                    NotifyPropertyChanged("LecturesMembers");
                 }
             }
         }
 
-        private ObservableCollection<Follower> _allFollowers;
-        public ObservableCollection<Follower> AllFollowers {
-            get { return _allFollowers; }
+        private ObservableCollection<Member> _allMembers;
+        public ObservableCollection<Member> AllMembers {
+            get { return _allMembers; }
             set {
-                if (_allFollowers!=value) {
-                    _allFollowers=value;
-                    NotifyPropertyChanged("AllFollowers");
+                if (_allMembers!=value) {
+                    _allMembers=value;
+                    NotifyPropertyChanged("AllMembers");
                 }
             }
         }
 
         public MemberAssignmentViewModel(Lecture lecture)
             : base() {
-            LecturesFollowers = new ObservableCollection<Follower>();   // TODO
-            LecturesFollowers.CollectionChanged += LecturesFollowersCollectionChanged;
+            LecturesMembers = new ObservableCollection<Member>();   // TODO
+            LecturesMembers.CollectionChanged += LecturesMembersCollectionChanged;
 
-            AllFollowers = new ObservableCollection<Follower>(phoneAppDB.Followers);
-            AllFollowers.CollectionChanged += AllFollowersCollectionChanged;
+            AllMembers = new ObservableCollection<Member>(phoneAppDB.Members);
+            AllMembers.CollectionChanged += AllMembersCollectionChanged;
         }
 
-        private void AllFollowersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+        private void AllMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action==NotifyCollectionChangedAction.Add) {
                 foreach (var item in e.NewItems) {
-                    var Follower = item as Follower;
-                    if (Follower!=null && LecturesFollowers.Contains(Follower)) {
-                        LecturesFollowers.Remove(Follower);
-                        NotifyPropertyChanged("LecturesFollowers");
+                    var Member = item as Member;
+                    if (Member!=null && LecturesMembers.Contains(Member)) {
+                        LecturesMembers.Remove(Member);
+                        NotifyPropertyChanged("LecturesMembers");
                     }
                 }
             }
         }
 
-        private void LecturesFollowersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+        private void LecturesMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action==NotifyCollectionChangedAction.Add) {
                 foreach (var item in e.NewItems) {
-                    var follower = item as Follower;
-                    if (follower!=null && AllFollowers.Contains(follower)) {
-                        AllFollowers.Remove(follower);
-                        NotifyPropertyChanged("AllFollowers");
+                    var Member = item as Member;
+                    if (Member!=null && AllMembers.Contains(Member)) {
+                        AllMembers.Remove(Member);
+                        NotifyPropertyChanged("AllMembers");
                     }
                 }
             }
@@ -84,19 +84,19 @@ namespace PhoneApp1
             DataContext = _viewModel;
         }
 
-        private void OnSelectionChanged_AssignedFollowerList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+        private void OnSelectionChanged_AssignedMemberList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
-            var follower = selector.SelectedItem as Follower;
-            if (follower!=null) {
-                _viewModel.AllFollowers.Add(follower);
+            var Member = selector.SelectedItem as Member;
+            if (Member!=null) {
+                _viewModel.AllMembers.Add(Member);
             }
         }
 
-        private void OnSelectionChanged_UnassignedFollowerList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+        private void OnSelectionChanged_UnassignedMemberList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
-            var follower = selector.SelectedItem as Follower;
-            if (follower!=null) {
-                _viewModel.LecturesFollowers.Add(follower);
+            var Member = selector.SelectedItem as Member;
+            if (Member!=null) {
+                _viewModel.LecturesMembers.Add(Member);
             }
         }
     }

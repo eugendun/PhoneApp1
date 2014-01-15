@@ -33,7 +33,7 @@ namespace PhoneApp1.Models
         public Table<Lecture> Lectures;
         public Table<ExceptionDate> ExceptionDates;
         public Table<Tutor> Tutors;
-        public Table<Follower> Followers;
+        public Table<Member> Members;
 
         private Table<LectureTutor> LectureTutors;
 
@@ -391,8 +391,8 @@ namespace PhoneApp1.Models
         }
     }
 
-    [Table(Name="Followers")]
-    public class Follower
+    [Table(Name="Members")]
+    public class Member
     {
         private int _id;
         [Column(Name="Id", Storage="_id", IsPrimaryKey=true, IsDbGenerated=true)]

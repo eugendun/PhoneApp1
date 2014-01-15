@@ -41,8 +41,8 @@ namespace PhoneApp1.ViewModel
             Tutors = new ObservableCollection<Tutor>(phoneAppDB.Tutors.ToList());
             Tutors.CollectionChanged += OnCollectionChanged;
 
-            Followers = new ObservableCollection<Follower>(phoneAppDB.Followers.ToList());
-            Followers.CollectionChanged += OnCollectionChanged;
+            Members = new ObservableCollection<Member>(phoneAppDB.Members.ToList());
+            Members.CollectionChanged += OnCollectionChanged;
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
@@ -77,12 +77,12 @@ namespace PhoneApp1.ViewModel
             }
         }
 
-        private ObservableCollection<Follower> _followers;
-        public ObservableCollection<Follower> Followers {
-            get { return _followers; }
+        private ObservableCollection<Member> _Members;
+        public ObservableCollection<Member> Members {
+            get { return _Members; }
             set {
-                _followers = value;
-                NotifyPropertyChanged("Followers");
+                _Members = value;
+                NotifyPropertyChanged("Members");
             }
         }
     }

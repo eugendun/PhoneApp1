@@ -11,7 +11,7 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1
 {
-    public class FollowerViewModel
+    public class MemberViewModel
     {
         public string Surname { get; set; }
         public string Forename { get; set; }
@@ -19,18 +19,18 @@ namespace PhoneApp1
         public DateTime Birthday { get; set; }
     }
 
-    public partial class NewFollowerView : PhoneApplicationPage
+    public partial class NewMemberView : PhoneApplicationPage
     {
-        private FollowerViewModel _follower = new FollowerViewModel {
+        private MemberViewModel _Member = new MemberViewModel {
             Surname="Nachname",
             Forename="Vorname",
             MatNr="Matrikelnummer",
             Birthday=DateTime.Today
         };
 
-        public NewFollowerView() {
+        public NewMemberView() {
             InitializeComponent();
-            DataContext = _follower;
+            DataContext = _Member;
         }
 
         private void OnClick_CancelButton(object sender, System.EventArgs e) {
@@ -39,13 +39,13 @@ namespace PhoneApp1
 
         private void OnClick_AddButton(object sender, System.EventArgs e) {
             try {
-                Follower follower = new Follower {
-                    Surname = _follower.Surname,
-                    Forename = _follower.Forename,
-                    Birthday = _follower.Birthday
+                Member Member = new Member {
+                    Surname = _Member.Surname,
+                    Forename = _Member.Forename,
+                    Birthday = _Member.Birthday
                 };
-                follower.MatNr = Convert.ToInt32(_follower.MatNr);
-                App.ViewModel.Followers.Add(follower);
+                Member.MatNr = Convert.ToInt32(_Member.MatNr);
+                App.ViewModel.Members.Add(Member);
                 NavigationService.GoBack();
             } catch (Exception) {
                 // TODO

@@ -13,7 +13,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 	<phone:PhoneApplicationPage.Resources>
-		<DataTemplate x:Key="FollowerListItemTemplate">
+		<DataTemplate x:Key="MemberListItemTemplate">
 			<StackPanel Orientation="Vertical" Width="331" d:DesignHeight="55.878">
 				<Grid d:DesignWidth="331.224" d:DesignHeight="282.245">
 					<Grid.RowDefinitions>
@@ -58,9 +58,9 @@
         		<RowDefinition/>
         	</Grid.RowDefinitions>
         	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zugeordnete Teilnehmer:"/>
-            <phone:LongListSelector x:Name="AssignedFollowerList" Grid.Row="1" Margin="0,0,0,15" ItemsSource="{Binding LecturesFollowers}" ItemTemplate="{StaticResource FollowerListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedFollowerList"/>
+            <phone:LongListSelector x:Name="AssignedMemberList" Grid.Row="1" Margin="0,0,0,15" ItemsSource="{Binding LecturesMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedMemberList"/>
 			<TextBlock HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Alle Teilnehmer:"/>
-        	<phone:LongListSelector x:Name="UnassignedFollowerList" Grid.RowSpan="3" Grid.Row="3" Margin="0,0,0,15" ItemsSource="{Binding AllFollowers}" ItemTemplate="{StaticResource FollowerListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedFollowerList"/>
+        	<phone:LongListSelector x:Name="UnassignedMemberList" Grid.RowSpan="3" Grid.Row="3" Margin="0,0,0,15" ItemsSource="{Binding AllMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedMemberList"/>
         </Grid>
     </Grid>
 
