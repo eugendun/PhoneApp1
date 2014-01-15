@@ -111,7 +111,7 @@ namespace PhoneApp1
         }
 
         private void OnClick_AddNewTutor(object sender, System.EventArgs e) {
-            NavigationService.Navigate(new Uri("/Views/NewTutorView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/TutorNewPage.xaml", UriKind.Relative));
         }
 
         private void OnSelectionChanged_AllTutorsList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {

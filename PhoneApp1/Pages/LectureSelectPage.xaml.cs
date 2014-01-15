@@ -11,9 +11,9 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1
 {
-    public partial class SelectLecturePage : PhoneApplicationPage
+    public partial class LectureSelectPage : PhoneApplicationPage
     {
-        public SelectLecturePage() {
+        public LectureSelectPage() {
             InitializeComponent();
             DataContext = App.ViewModel;
         }
@@ -25,7 +25,7 @@ namespace PhoneApp1
                 App.Current.Resources.Remove("SelectedLecture");
             }
             App.Current.Resources.Add("SelectedLecture", lecture);
-            NavigationService.Navigate(new Uri("/Views/MemberAssignmentPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/MemberAssignmentPage.xaml", UriKind.Relative));
         }
     }
 }

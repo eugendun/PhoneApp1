@@ -11,11 +11,11 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1.Views
 {
-    public partial class NewTutorView : PhoneApplicationPage
+    public partial class TutorNewPage : PhoneApplicationPage
     {
         private Tutor _newTutor = new Tutor { Surname="Nachname", Forename="Vorname" };
 
-        public NewTutorView() {
+        public TutorNewPage() {
             InitializeComponent();
             DataContext = _newTutor;
         }

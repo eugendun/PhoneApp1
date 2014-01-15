@@ -27,7 +27,7 @@ namespace PhoneApp1.Views
         }
 
         private void OnClick_AddNewTutorButton(object sender, EventArgs e) {
-            NavigationService.Navigate(new Uri("/Views/NewTutorView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/TutorNewPage.xaml", UriKind.Relative));
         }
     }
 }

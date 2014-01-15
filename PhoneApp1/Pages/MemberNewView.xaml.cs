@@ -19,7 +19,7 @@ namespace PhoneApp1
         public DateTime Birthday { get; set; }
     }
 
-    public partial class NewMemberView : PhoneApplicationPage
+    public partial class MemberNewView : PhoneApplicationPage
     {
         private MemberViewModel _Member = new MemberViewModel {
             Surname="Nachname",
@@ -28,7 +28,7 @@ namespace PhoneApp1
             Birthday=DateTime.Today
         };
 
-        public NewMemberView() {
+        public MemberNewView() {
             InitializeComponent();
             DataContext = _Member;
         }

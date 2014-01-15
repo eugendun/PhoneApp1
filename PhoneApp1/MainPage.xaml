@@ -60,42 +60,42 @@
 				<Button Content="Veranstaltung" Click="Button_Click">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Views/LecturesView.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/LecturesView.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Teilnehmer">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Views/MembersView.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/MembersView.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Zuordnung">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Views/SelectLecturePage.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/LectureSelectPage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Anwesenheit">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Views/SelectLecturePage.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/LectureSelectPage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Bewertung">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Assessment.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/AssessmentPage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
 				<Button Content="Exportieren">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
-							<ec:NavigateToPageAction TargetPage="/Export.xaml"/>
+							<ec:NavigateToPageAction TargetPage="/Pages/ExportPage.xaml"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>

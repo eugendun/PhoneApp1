@@ -101,9 +101,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MembersView.xaml.cs">
-      <DependentUpon>MembersView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\PhoneAppContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -111,46 +108,39 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SubjectView.xaml.cs">
-      <DependentUpon>SubjectView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\PhoneAppViewModel.cs" />
-    <Compile Include="Views\AssessmentPage.xaml.cs">
+    <Compile Include="Pages\AssessmentPage.xaml.cs">
       <DependentUpon>AssessmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MembersView.xaml.cs">
+    <Compile Include="Pages\MembersView.xaml.cs">
       <DependentUpon>MembersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LectureDetailsPage.xaml.cs">
+    <Compile Include="Pages\LectureDetailsPage.xaml.cs">
       <DependentUpon>LectureDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LecturesView.xaml.cs">
+    <Compile Include="Pages\LecturesView.xaml.cs">
       <DependentUpon>LecturesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MemberAssignmentPage.xaml.cs">
+    <Compile Include="Pages\MemberAssignmentPage.xaml.cs">
       <DependentUpon>MemberAssignmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewMemberView.xaml.cs">
-      <DependentUpon>NewMemberView.xaml</DependentUpon>
+    <Compile Include="Pages\MemberNewView.xaml.cs">
+      <DependentUpon>MemberNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewLectureView.xaml.cs">
-      <DependentUpon>NewLectureView.xaml</DependentUpon>
+    <Compile Include="Pages\LectureNewView.xaml.cs">
+      <DependentUpon>LectureNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewTutorView.xaml.cs">
-      <DependentUpon>NewTutorView.xaml</DependentUpon>
+    <Compile Include="Pages\TutorNewPage.xaml.cs">
+      <DependentUpon>TutorNewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ObservableCollection.cs" />
-    <Compile Include="Views\PresencePage.xaml.cs">
+    <Compile Include="Pages\PresencePage.xaml.cs">
       <DependentUpon>PresencePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectLecturePage.xaml.cs">
-      <DependentUpon>SelectLecturePage.xaml</DependentUpon>
+    <Compile Include="Pages\LectureSelectPage.xaml.cs">
+      <DependentUpon>LectureSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TutorsView.xaml.cs">
+    <Compile Include="Pages\TutorsView.xaml.cs">
       <DependentUpon>TutorsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsPhoneControl1.xaml.cs">
-      <DependentUpon>WindowsPhoneControl1.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -166,65 +156,53 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MembersView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ResourceDictionary1.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SubjectView.xaml">
+    <Page Include="Pages\AssessmentPage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\MembersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AssessmentPage.xaml">
+    <Page Include="Pages\LectureDetailsPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MembersView.xaml">
+    <Page Include="Pages\LecturesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LectureDetailsPage.xaml">
+    <Page Include="Pages\MemberAssignmentPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\LecturesView.xaml">
+    <Page Include="Pages\MemberNewView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LectureNewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MemberAssignmentPage.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\NewMemberView.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\NewLectureView.xaml">
+    <Page Include="Pages\TutorNewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewTutorView.xaml">
+    <Page Include="Pages\PresencePage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LectureSelectPage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TutorsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PresencePage.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SelectLecturePage.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TutorsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowsPhoneControl1.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

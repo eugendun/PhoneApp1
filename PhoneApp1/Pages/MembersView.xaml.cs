@@ -19,7 +19,7 @@ namespace PhoneApp1.Views
 
         private void OnClick_AddMemberButton(object sender, System.EventArgs e)
         {
-        	NavigationService.Navigate(new Uri("/Views/NewMemberView.xaml", UriKind.Relative));
+        	NavigationService.Navigate(new Uri("/Pages/MemberNewView.xaml", UriKind.Relative));
         }
     }
 }
