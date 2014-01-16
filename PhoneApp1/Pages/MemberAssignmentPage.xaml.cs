@@ -25,12 +25,26 @@ namespace PhoneApp1
             Lecture = lecture;
 
             AssignedMembers = new ObservableCollection<Member>(Lecture.Members);
-            UnassignedMembers = new ObservableCollection<Member>(phoneAppDB.Members);
+            UnassignedMembers = new ObservableCollection<Member>(from m in phoneAppDB.Members
+                                                                 where !AssignedMembers.Contains(m)
+                                                                 select m);
         }
 
         public void SaveChangesToDB() {
+            var dbLecture = phoneAppDB.Lectures.Single(l => l.Equals(Lecture));
+            if (dbLecture != null) {
+                foreach (Member member in dbLecture.Members) {
+                    dbLecture.Members.Remove(member); 
+                }
+                phoneAppDB.SubmitChanges();
 
-            phoneAppDB.SubmitChanges();
+                foreach (Member member in AssignedMembers) {
+                    if (!dbLecture.Members.Contains(member)) {
+                        dbLecture.Members.Add(member);
+                    }
+                }
+                phoneAppDB.SubmitChanges();
+            }
         }
     }
 

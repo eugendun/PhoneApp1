@@ -18,13 +18,16 @@ namespace PhoneApp1.Models
     public class DataContextFactory
     {
         private static string _connectionString = "Data Source=isostore:/PhoneApp1.sdf";
+        private static PhoneAppContext _dbContext;
 
         public static PhoneAppContext GetDataContext() {
-            var dbContext = new PhoneAppContext(_connectionString);
-            if (!dbContext.DatabaseExists()) {
-                dbContext.CreateDatabase();
+            if (_dbContext == null) {
+                _dbContext = new PhoneAppContext(_connectionString);
+                if (!_dbContext.DatabaseExists()) {
+                    _dbContext.CreateDatabase();
+                } 
             }
-            return dbContext;
+            return _dbContext;
         }
     }
 
