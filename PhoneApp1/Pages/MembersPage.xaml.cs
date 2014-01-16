@@ -13,7 +13,19 @@ namespace PhoneApp1.Views
 {
     public partial class MembersPage : PhoneApplicationPage
     {
-        private Member selectedMember;
+        private Member _selectedMember;
+        private Member SelectedMember {
+            get { return _selectedMember; }
+            set {
+                _selectedMember = value;
+                var deleteButton = ApplicationBar.Buttons[1] as ApplicationBarIconButton;
+                if (_selectedMember != null) {
+                    deleteButton.IsEnabled = true;
+                } else {
+                    deleteButton.IsEnabled = false;
+                }
+            }
+        }
 
         public MembersPage() {
             InitializeComponent();
@@ -25,16 +37,18 @@ namespace PhoneApp1.Views
         }
 
         private void DeleteMemberButton_Click(object sender, EventArgs e) {
-            if (selectedMember != null) {
-                App.ViewModel.Members.Remove(selectedMember);
+            if (SelectedMember != null) {
+                App.ViewModel.Members.Remove(SelectedMember);
                 App.ViewModel.phoneAppDB.SubmitChanges();
             }
         }
 
         private void MemberList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
-            var selMember = selector.SelectedItem as Member;
-            selectedMember = selMember;
+            if (selector != null) {
+                var selMember = selector.SelectedItem as Member;
+                SelectedMember = selMember;
+            }
         }
     }
 }
