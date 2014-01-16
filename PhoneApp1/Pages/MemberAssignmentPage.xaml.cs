@@ -22,6 +22,10 @@ namespace PhoneApp1
 
         public MemberAssignmentViewModel(Lecture lecture)
             : base() {
+            if (App.Current.Resources.Contains("SelectedMember")) {
+                App.Current.Resources.Remove("SelectedMember");
+            }
+
             Lecture = lecture;
 
             AssignedMembers = new ObservableCollection<Member>(Lecture.Members);
@@ -34,7 +38,7 @@ namespace PhoneApp1
             var dbLecture = phoneAppDB.Lectures.Single(l => l.Equals(Lecture));
             if (dbLecture != null) {
                 foreach (Member member in dbLecture.Members) {
-                    dbLecture.Members.Remove(member); 
+                    dbLecture.Members.Remove(member);
                 }
                 phoneAppDB.SubmitChanges();
 

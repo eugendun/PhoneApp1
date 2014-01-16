@@ -82,7 +82,7 @@ namespace PhoneApp1
             //}
 
             // Create the ViewModel object.
-            //viewModel = new PhoneAppViewModel();
+            viewModel = new PhoneAppViewModel();
         }
 
         // Code to execute when the application is launching (eg, from Start)
