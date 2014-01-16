@@ -80,12 +80,17 @@ namespace PhoneApp1
             base.OnNavigatedTo(e);
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e) {
+            
+            base.OnNavigatedFrom(e);
+        }
+
         private void OnSelectionChanged_AssignedMemberList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
                 _viewModel.AllMembers.Add(Member);
-                //_viewModel.LecturesMembers.Remove(Member);
+                _viewModel.LecturesMembers.Remove(Member);
             }
         }
 
@@ -94,7 +99,7 @@ namespace PhoneApp1
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
                 _viewModel.LecturesMembers.Add(Member);
-                //_viewModel.AllMembers.Remove(Member);
+                _viewModel.AllMembers.Remove(Member);
             }
         }
     }
