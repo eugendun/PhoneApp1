@@ -34,7 +34,7 @@ namespace PhoneApp1.ViewModel
     public class PhoneAppViewModel : NotifyModel
     {
         public PhoneAppViewModel() {
-            phoneAppDB = DataContextFactory.GetDataContext();
+            //phoneAppDB = DataContextFactory.GetDataContext();
             Lectures = new ObservableCollection<Lecture>(phoneAppDB.Lectures.ToList());
             Lectures.CollectionChanged += OnCollectionChanged;
 

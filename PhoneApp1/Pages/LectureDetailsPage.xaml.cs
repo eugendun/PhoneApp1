@@ -21,7 +21,7 @@ namespace PhoneApp1
         public Lecture CurrentLecture {
             get { return _currentLecture; }
             set {
-                if (_currentLecture!=value) {
+                if (_currentLecture != value) {
                     _currentLecture = value;
                     NotifyPropertyChanged("CurrentLecture");
                 }
@@ -32,8 +32,8 @@ namespace PhoneApp1
         public ObservableCollection<Tutor> AssignedTutors {
             get { return _assignedTutors; }
             set {
-                if (_assignedTutors!=value) {
-                    _assignedTutors=value;
+                if (_assignedTutors != value) {
+                    _assignedTutors = value;
                     NotifyPropertyChanged("AssignedTutors");
                 }
             }
@@ -43,8 +43,8 @@ namespace PhoneApp1
         public ObservableCollection<Tutor> UnassignedTutors {
             get { return _unassignedTutors; }
             set {
-                if (_unassignedTutors!=value) {
-                    _unassignedTutors=value;
+                if (_unassignedTutors != value) {
+                    _unassignedTutors = value;
                     NotifyPropertyChanged("UnassginedTutors");
                 }
             }
@@ -53,8 +53,10 @@ namespace PhoneApp1
         public LectureDetailsViewModel(Lecture lecture)
             : base() {
             CurrentLecture = lecture;
+
             AssignedTutors = new ObservableCollection<Tutor>(lecture.Tutors);
             AssignedTutors.CollectionChanged += AssignedTutorCollectionChanged;
+
             var allTutors = phoneAppDB.Tutors.ToList();
             var unassigned = phoneAppDB.Tutors.ToList().Except(lecture.Tutors.ToList()).ToList();
             UnassignedTutors = new ObservableCollection<Tutor>(unassigned);
@@ -65,7 +67,7 @@ namespace PhoneApp1
             if (e.Action==NotifyCollectionChangedAction.Add) {
                 foreach (var item in e.NewItems) {
                     var tutor = item as Tutor;
-                    if (tutor!=null && AssignedTutors.Contains(tutor)) {
+                    if (tutor != null && AssignedTutors.Contains(tutor)) {
                         AssignedTutors.Remove(tutor);
                         NotifyPropertyChanged("AssignedTutors");
                     }
@@ -77,7 +79,7 @@ namespace PhoneApp1
             if (e.Action==NotifyCollectionChangedAction.Add) {
                 foreach (var item in e.NewItems) {
                     var tutor = item as Tutor;
-                    if (tutor!=null && UnassignedTutors.Contains(tutor)) {
+                    if (tutor != null && UnassignedTutors.Contains(tutor)) {
                         UnassignedTutors.Remove(tutor);
                         NotifyPropertyChanged("UnassignedTutors");
                     }
@@ -86,6 +88,13 @@ namespace PhoneApp1
         }
 
         public void SaveChangesToDataBase() {
+            var dbLecture = this.phoneAppDB.Lectures.Single(l => l.Id.Equals(this._currentLecture.Id));
+            foreach (var t in dbLecture.Tutors) {
+                dbLecture.Tutors.Remove(t);
+            }
+            foreach (var t in this.AssignedTutors) {
+                dbLecture.Tutors.Add(t);
+            }
             phoneAppDB.SubmitChanges();
         }
     }
@@ -98,7 +107,7 @@ namespace PhoneApp1
             InitializeComponent();
 
             var lecture = App.Current.Resources["SelectedLecture"] as Lecture;
-            if (lecture!=null) {
+            if (lecture != null) {
                 _viewModel = new LectureDetailsViewModel(lecture);
             }
 
@@ -114,20 +123,26 @@ namespace PhoneApp1
             NavigationService.Navigate(new Uri("/Pages/TutorNewPage.xaml", UriKind.Relative));
         }
 
-        private void OnSelectionChanged_AllTutorsList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+        private void OnSelectionChanged_AllTutorsList(object sender, SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
             var selectedTutor = selector.SelectedItem as Tutor;
-            if (selectedTutor!=null) {
+            if (selectedTutor != null) {
                 _viewModel.AssignedTutors.Add(selectedTutor);
             }
         }
 
-        private void OnSelectionChanged_AssignedTutorsList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+        private void OnSelectionChanged_AssignedTutorsList(object sender, SelectionChangedEventArgs e) {
             var selector = sender as LongListSelector;
             var tutor = selector.SelectedItem as Tutor;
-            if (tutor!=null) {
+            if (tutor != null) {
                 _viewModel.UnassignedTutors.Add(tutor);
             }
+        }
+
+        // TODO
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e) {
+            this._viewModel.SaveChangesToDataBase();
+            base.OnNavigatingFrom(e);
         }
     }
 }

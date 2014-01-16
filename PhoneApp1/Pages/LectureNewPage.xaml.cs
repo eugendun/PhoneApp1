@@ -11,7 +11,7 @@ using PhoneApp1.Models;
 
 namespace PhoneApp1.Views
 {
-    public partial class LectureNewView : PhoneApplicationPage
+    public partial class LectureNewPage : PhoneApplicationPage
     {
         private Lecture _newLecture = new Lecture {
             Name="Veranstaltungsname",
@@ -19,7 +19,7 @@ namespace PhoneApp1.Views
             EndDate=DateTime.Today,
         };
 
-        public LectureNewView() {
+        public LectureNewPage() {
             InitializeComponent();
             var selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
             if (selectedLecture!=null) {

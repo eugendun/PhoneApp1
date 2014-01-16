@@ -38,7 +38,7 @@ namespace PhoneApp1.Views
         }
 
         private void OnClick_AddLectureBarIconButton(object sender, EventArgs e) {
-            NavigationService.Navigate(new Uri("/Pages/LectureNewView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/LectureNewPage.xaml", UriKind.Relative));
         }
 
         private void OnSelectionChanged_LectureSelector(object sender, SelectionChangedEventArgs e) {
@@ -52,7 +52,7 @@ namespace PhoneApp1.Views
 
         private void OnClick_EditButton(object sender, System.EventArgs e) {
             if (SelectedLecture!=null) {
-                NavigationService.Navigate(new Uri("/Pages/LectureNewView.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Pages/LectureNewPage.xaml", UriKind.Relative));
             }
         }
 
