@@ -25,7 +25,9 @@ namespace PhoneApp1
                 App.Current.Resources.Remove("SelectedLecture");
             }
             App.Current.Resources.Add("SelectedLecture", lecture);
-            NavigationService.Navigate(new Uri("/Pages/MemberAssignmentPage.xaml", UriKind.Relative));
+            if (NavigationService.CanGoBack) {
+                NavigationService.GoBack();
+            }
         }
     }
 }

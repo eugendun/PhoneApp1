@@ -36,6 +36,7 @@ namespace PhoneApp1.Models
         public Table<Member> Members;
 
         private Table<LectureTutor> LectureTutors;
+        private Table<LectureMember> LectureMembers;
 
         public PhoneAppContext(string connectionString) : base(connectionString) { }
 
@@ -141,9 +142,7 @@ namespace PhoneApp1.Models
         [Association(Name="FK_LectureTutors_Lectures", Storage="_lectureTutor", OtherKey="_lectureId", DeleteRule="CASCADE")]
         private ICollection<LectureTutor> LectureTutors {
             get { return _lectureTutor; }
-            set {
-                _lectureTutor.Assign(value);
-            }
+            set { _lectureTutor.Assign(value); }
         }
 
         public ICollection<Tutor> Tutors {
@@ -173,10 +172,45 @@ namespace PhoneApp1.Models
             }
         }
 
+        private EntitySet<LectureMember> _lectureMembers;
+        [Association(Name="FK_LectureMembers_Lectures", Storage="_lectureMembers", OtherKey="_lectureId", DeleteRule="CASCADE")]
+        private ICollection<LectureMember> LectureMembers {
+            get { return _lectureMembers; }
+            set { _lectureMembers.Assign(value); }
+        }
+
+        public ICollection<Member> Members {
+            get {
+                var members = new ObservableCollection<Member>(from lm in LectureMembers select lm.Member);
+                members.CollectionChanged += OnMembersCollectionChanged;
+                return members;
+            }
+        }
+
+        private void OnMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action == NotifyCollectionChangedAction.Add) {
+                foreach (Member addedMember in e.NewItems) {
+                    LectureMembers.Add(new LectureMember { Lecture = this, Member = addedMember });
+                }
+            }
+
+            if (e.Action == NotifyCollectionChangedAction.Remove) {
+                foreach (Member removedMember in e.OldItems) {
+                    var affectedLectureMembers = from lm in LectureMembers
+                                                 where lm.Member == removedMember
+                                                 select lm;
+                    foreach (LectureMember affectedLectureMember in affectedLectureMembers) {
+                        affectedLectureMember.Lecture = null;
+                    }
+                }
+            }
+        }
+
         public Lecture() {
             _exceptionDates = new EntitySet<ExceptionDate>(new Action<ExceptionDate>(OnAddExceptionDate), new Action<ExceptionDate>(OnRemoveExceptionDate));
             _lectureTimes = new EntitySet<LectureTime>(new Action<LectureTime>(OnAddLectureTime), new Action<LectureTime>(OnRemoveLectureTime));
             _lectureTutor = new EntitySet<LectureTutor>();
+            _lectureMembers = new EntitySet<LectureMember>();
         }
 
         private void OnRemoveLectureTime(LectureTime obj) {
@@ -391,6 +425,38 @@ namespace PhoneApp1.Models
         }
     }
 
+    [Table(Name="LectureMembers")]
+    public class LectureMember
+    {
+        [Column(Name="LectureId", IsPrimaryKey=true)]
+        private int _lectureId;
+
+        private EntityRef<Lecture> _lecture;
+        [Association(Name="FK_LectureMembers_Lectures", Storage="_lecture", IsForeignKey=true, ThisKey="_lectureId", DeleteOnNull=true)]
+        public Lecture Lecture {
+            get { return _lecture.Entity; }
+            set {
+                if (_lecture.Entity != value) {
+                    _lecture.Entity = value;
+                }
+            }
+        }
+
+        [Column(Name="MemberId", IsPrimaryKey=true)]
+        private int _memberId;
+
+        private EntityRef<Member> _member;
+        [Association(Name="FK_LectureMembers_Members", Storage="_member", IsForeignKey=true, ThisKey="_memberId", DeleteOnNull=true)]
+        public Member Member {
+            get { return _member.Entity; }
+            set {
+                if (_member.Entity != value) {
+                    _member.Entity = value;
+                }
+            }
+        }
+    }
+
     [Table(Name="Members")]
     public class Member
     {
@@ -440,6 +506,45 @@ namespace PhoneApp1.Models
                     _birthday=value;
                 }
             }
+        }
+
+        private EntitySet<LectureMember> _lectureMembers;
+        [Association(Name="FK_LectureMembers_Members", Storage="_lectureMembers", OtherKey="_memberId", DeleteRule="CASCADE")]
+        private ICollection<LectureMember> LectureMembers {
+            get { return _lectureMembers; }
+            set {
+                _lectureMembers.Assign(value);
+            }
+        }
+
+        public ICollection<Lecture> Lectures {
+            get {
+                var lectures = new ObservableCollection<Lecture>(from lm in LectureMembers select lm.Lecture);
+                lectures.CollectionChanged += OnLecturesCollectionChanged;
+                return lectures;
+            }
+        }
+
+        private void OnLecturesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action == NotifyCollectionChangedAction.Add) {
+                foreach (Lecture addedLecture in e.NewItems) {
+                    LectureMembers.Add(new LectureMember { Lecture = addedLecture, Member = this });
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove) {
+                foreach (Lecture removedLecture in e.OldItems) {
+                    var affectedLectureMembers = from lm in LectureMembers
+                                                 where lm.Lecture == removedLecture
+                                                 select lm;
+                    foreach (LectureMember affectedLectureMember in affectedLectureMembers) {
+                        affectedLectureMember.Lecture = null;
+                    }
+                }
+            }
+        }
+
+        public Member() {
+            _lectureMembers = new EntitySet<LectureMember>();
         }
     }
 

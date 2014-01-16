@@ -12,29 +12,29 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
-	<phone:PhoneApplicationPage.Resources>
-		<DataTemplate x:Key="MemberListItemTemplate">
-			<StackPanel Orientation="Vertical" Width="331" d:DesignHeight="55.878">
-				<Grid d:DesignWidth="331.224" d:DesignHeight="282.245">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
-						<TextBlock Text="{Binding Surname}"/>
-						<TextBlock Text=", "/>
-						<TextBlock Text="{Binding Forename}"/>
-					</StackPanel>
-					<TextBlock Grid.Row="1" Text="{Binding MatNr}" FontSize="16"/>
-				</Grid>
-			</StackPanel>
-		</DataTemplate>
-	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="MemberListItemTemplate">
+            <StackPanel Orientation="Vertical" Width="331" d:DesignHeight="55.878">
+                <Grid d:DesignWidth="331.224" d:DesignHeight="282.245">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                        <TextBlock Text="{Binding Surname}"/>
+                        <TextBlock Text=", "/>
+                        <TextBlock Text="{Binding Forename}"/>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" Text="{Binding MatNr}" FontSize="16"/>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -51,16 +51,21 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<Grid.RowDefinitions>
-        		<RowDefinition Height="Auto"/>
-        		<RowDefinition/>
-        		<RowDefinition Height="Auto"/>
-        		<RowDefinition/>
-        	</Grid.RowDefinitions>
-        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zugeordnete Teilnehmer:"/>
-            <phone:LongListSelector x:Name="AssignedMemberList" Grid.Row="1" Margin="0,0,0,15" ItemsSource="{Binding LecturesMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedMemberList"/>
-			<TextBlock HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Alle Teilnehmer:"/>
-        	<phone:LongListSelector x:Name="UnassignedMemberList" Grid.RowSpan="3" Grid.Row="3" Margin="0,0,0,15" ItemsSource="{Binding AllMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedMemberList"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Veranstaltung:"/>
+                <TextBlock Text="{Binding Lecture.Name}" Padding="10,0,0,0"/>
+            </StackPanel>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zugeordnete Teilnehmer:" Grid.Row="1" FontWeight="Bold"/>
+            <phone:LongListSelector x:Name="AssignedMemberList" Grid.Row="2" Margin="0,0,0,15" ItemsSource="{Binding LecturesMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedMemberList"/>
+            <TextBlock HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Alle Teilnehmer:" FontWeight="Bold"/>
+            <phone:LongListSelector x:Name="UnassignedMemberList" Grid.RowSpan="3" Grid.Row="4" Margin="0,0,0,15" ItemsSource="{Binding AllMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedMemberList"/>
         </Grid>
     </Grid>
 

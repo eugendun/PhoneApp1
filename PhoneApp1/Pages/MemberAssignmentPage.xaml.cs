@@ -16,6 +16,16 @@ namespace PhoneApp1
 {
     internal class MemberAssignmentViewModel : NotifyModel
     {
+        private Lecture _lecture;
+        public Lecture Lecture {
+            get { return _lecture; }
+            set {
+                if (_lecture != value) {
+                    _lecture = value;
+                }
+            }
+        }
+
         private ObservableCollection<Member> _lecturesMembers;
         public ObservableCollection<Member> LecturesMembers {
             get { return _lecturesMembers; }
@@ -40,48 +50,34 @@ namespace PhoneApp1
 
         public MemberAssignmentViewModel(Lecture lecture)
             : base() {
-            LecturesMembers = new ObservableCollection<Member>();   // TODO
-            LecturesMembers.CollectionChanged += LecturesMembersCollectionChanged;
+            Lecture = lecture;
 
+            LecturesMembers = new ObservableCollection<Member>(Lecture.Members);
             AllMembers = new ObservableCollection<Member>(phoneAppDB.Members);
-            AllMembers.CollectionChanged += AllMembersCollectionChanged;
         }
 
-        private void AllMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            if (e.Action==NotifyCollectionChangedAction.Add) {
-                foreach (var item in e.NewItems) {
-                    var Member = item as Member;
-                    if (Member!=null && LecturesMembers.Contains(Member)) {
-                        LecturesMembers.Remove(Member);
-                        NotifyPropertyChanged("LecturesMembers");
-                    }
-                }
-            }
-        }
-
-        private void LecturesMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            if (e.Action==NotifyCollectionChangedAction.Add) {
-                foreach (var item in e.NewItems) {
-                    var Member = item as Member;
-                    if (Member!=null && AllMembers.Contains(Member)) {
-                        AllMembers.Remove(Member);
-                        NotifyPropertyChanged("AllMembers");
-                    }
-                }
-            }
+        public void SaveChangesToDB() {
+            phoneAppDB.SubmitChanges();
         }
     }
 
     public partial class MemberAssignmentPage : PhoneApplicationPage
     {
-        private Lecture _selectedLecture;
         private MemberAssignmentViewModel _viewModel;
 
         public MemberAssignmentPage() {
             InitializeComponent();
-            _selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
-            _viewModel = new MemberAssignmentViewModel(_selectedLecture);
-            DataContext = _viewModel;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            var selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
+            if (selectedLecture == null) {
+                NavigationService.Navigate(new Uri("/Pages/LectureSelectPage.xaml", UriKind.Relative));
+            } else {
+                _viewModel = new MemberAssignmentViewModel(selectedLecture);
+                DataContext = _viewModel;
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void OnSelectionChanged_AssignedMemberList(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
@@ -89,6 +85,7 @@ namespace PhoneApp1
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
                 _viewModel.AllMembers.Add(Member);
+                //_viewModel.LecturesMembers.Remove(Member);
             }
         }
 
@@ -97,6 +94,7 @@ namespace PhoneApp1
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
                 _viewModel.LecturesMembers.Add(Member);
+                //_viewModel.AllMembers.Remove(Member);
             }
         }
     }

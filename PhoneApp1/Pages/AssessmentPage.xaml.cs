@@ -12,9 +12,18 @@ namespace PhoneApp1
 {
     public partial class AssessmentPage : PhoneApplicationPage
     {
-        public AssessmentPage()
-        {
+        public AssessmentPage() {
             InitializeComponent();
+            if (App.Current.Resources.Contains("SelectedLecture")) {
+                App.Current.Resources.Remove("SelectedLecture");
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            if (!App.Current.Resources.Contains("SelectedLecture")) {
+                NavigationService.Navigate(new Uri("/Pages/LectureSelectPage.xaml", UriKind.Relative));
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }
