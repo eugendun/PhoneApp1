@@ -16,47 +16,20 @@ namespace PhoneApp1
 {
     internal class MemberAssignmentViewModel : NotifyModel
     {
-        private Lecture _lecture;
-        public Lecture Lecture {
-            get { return _lecture; }
-            set {
-                if (_lecture != value) {
-                    _lecture = value;
-                }
-            }
-        }
-
-        private ObservableCollection<Member> _lecturesMembers;
-        public ObservableCollection<Member> LecturesMembers {
-            get { return _lecturesMembers; }
-            set {
-                if (_lecturesMembers!=value) {
-                    _lecturesMembers=value;
-                    NotifyPropertyChanged("LecturesMembers");
-                }
-            }
-        }
-
-        private ObservableCollection<Member> _allMembers;
-        public ObservableCollection<Member> AllMembers {
-            get { return _allMembers; }
-            set {
-                if (_allMembers!=value) {
-                    _allMembers=value;
-                    NotifyPropertyChanged("AllMembers");
-                }
-            }
-        }
+        public Lecture Lecture { get; set; }
+        public ObservableCollection<Member> AssignedMembers { get; set; }
+        public ObservableCollection<Member> UnassignedMembers { get; set; }
 
         public MemberAssignmentViewModel(Lecture lecture)
             : base() {
             Lecture = lecture;
 
-            LecturesMembers = new ObservableCollection<Member>(Lecture.Members);
-            AllMembers = new ObservableCollection<Member>(phoneAppDB.Members);
+            AssignedMembers = new ObservableCollection<Member>(Lecture.Members);
+            UnassignedMembers = new ObservableCollection<Member>(phoneAppDB.Members);
         }
 
         public void SaveChangesToDB() {
+
             phoneAppDB.SubmitChanges();
         }
     }
@@ -81,7 +54,9 @@ namespace PhoneApp1
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e) {
-            
+            if (_viewModel != null) {
+                _viewModel.SaveChangesToDB();
+            }
             base.OnNavigatedFrom(e);
         }
 
@@ -89,8 +64,8 @@ namespace PhoneApp1
             var selector = sender as LongListSelector;
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
-                _viewModel.AllMembers.Add(Member);
-                _viewModel.LecturesMembers.Remove(Member);
+                _viewModel.UnassignedMembers.Add(Member);
+                _viewModel.AssignedMembers.Remove(Member);
             }
         }
 
@@ -98,8 +73,8 @@ namespace PhoneApp1
             var selector = sender as LongListSelector;
             var Member = selector.SelectedItem as Member;
             if (Member!=null) {
-                _viewModel.LecturesMembers.Add(Member);
-                _viewModel.AllMembers.Remove(Member);
+                _viewModel.AssignedMembers.Add(Member);
+                _viewModel.UnassignedMembers.Remove(Member);
             }
         }
     }

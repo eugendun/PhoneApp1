@@ -63,9 +63,9 @@
                 <TextBlock Text="{Binding Lecture.Name}" Padding="10,0,0,0"/>
             </StackPanel>
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zugeordnete Teilnehmer:" Grid.Row="1" FontWeight="Bold"/>
-            <phone:LongListSelector x:Name="AssignedMemberList" Grid.Row="2" Margin="0,0,0,15" ItemsSource="{Binding LecturesMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedMemberList"/>
+            <phone:LongListSelector x:Name="AssignedMemberList" Grid.Row="2" Margin="0,0,0,15" ItemsSource="{Binding AssignedMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedMemberList"/>
             <TextBlock HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Alle Teilnehmer:" FontWeight="Bold"/>
-            <phone:LongListSelector x:Name="UnassignedMemberList" Grid.RowSpan="3" Grid.Row="4" Margin="0,0,0,15" ItemsSource="{Binding AllMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedMemberList"/>
+            <phone:LongListSelector x:Name="UnassignedMemberList" Grid.RowSpan="3" Grid.Row="4" Margin="0,0,0,15" ItemsSource="{Binding UnassignedMembers}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="OnSelectionChanged_UnassignedMemberList"/>
         </Grid>
     </Grid>
 
