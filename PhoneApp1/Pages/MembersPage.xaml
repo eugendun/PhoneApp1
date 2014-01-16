@@ -27,6 +27,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBarIconButton x:Name="AddMemberButton" IconUri="/Toolkit.Content/ApplicationBar.Add.png" Text="Hinzufügen" Click="OnClick_AddMemberButton"/>
+            <shell:ApplicationBarIconButton x:Name="DeleteMemberButton" IconUri="/Toolkit.Content/ApplicationBar.Delete.png" Text="löschen" IsEnabled="False" Click="DeleteMemberButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -45,7 +46,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:LongListSelector d:IsHidden="True" ItemsSource="{Binding Members}" ItemTemplate="{StaticResource MemberListItemTemplate}" />
+            <phone:LongListSelector x:Name="MemberList" d:IsHidden="True" ItemsSource="{Binding Members}" ItemTemplate="{StaticResource MemberListItemTemplate}" SelectionChanged="MemberList_SelectionChanged" />
         </Grid>
     </Grid>
 
