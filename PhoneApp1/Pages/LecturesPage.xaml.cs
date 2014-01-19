@@ -37,6 +37,13 @@ namespace PhoneApp1.Views
             DataContext = App.ViewModel;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            if (App.Current.Resources.Contains("SelectedLecture")) {
+                App.Current.Resources.Remove("SelectedLecture");
+            }            
+            base.OnNavigatedTo(e);
+        }
+
         private void OnClick_AddLectureBarIconButton(object sender, EventArgs e) {
             NavigationService.Navigate(new Uri("/Pages/LectureNewPage.xaml", UriKind.Relative));
         }

@@ -5,11 +5,26 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 //disable neved used/assigned warnings for fields that are being used by LINQ
 #pragma warning disable 0169, 0649
+
+public class DebugTextWriter : System.IO.TextWriter
+{
+    public override void Write(char[] buffer, int index, int count) {
+        System.Diagnostics.Debug.WriteLine(new String(buffer, index, count));
+    }
+
+    public override void Write(string value) {
+        System.Diagnostics.Debug.WriteLine(value);
+    }
+
+    public override Encoding Encoding {
+        get { return System.Text.Encoding.UTF8; }
+    }
+}
 
 namespace PhoneApp1.Models
 {
@@ -26,6 +41,9 @@ namespace PhoneApp1.Models
                 if (!_dbContext.DatabaseExists()) {
                     _dbContext.CreateDatabase();
                 }
+#if DEBUG
+                _dbContext.Log = new DebugTextWriter(); 
+#endif
             }
             return _dbContext;
         }
@@ -38,6 +56,7 @@ namespace PhoneApp1.Models
         public Table<Tutor> Tutors;
         public Table<Member> Members;
 
+        private Table<LectureTime> LectureTimes;
         private Table<LectureTutor> LectureTutors;
         private Table<LectureMember> LectureMembers;
 
@@ -295,6 +314,19 @@ namespace PhoneApp1.Models
         [Column(Name="Id", Storage="_id", IsPrimaryKey=true, IsDbGenerated=true)]
         public int Id { get { return _id; } }
 
+        private int _weekday;
+        [Column(Name="Weekday", Storage="_weekday")]
+        public int Weekday {
+            get { return _weekday; }
+            set {
+                if (_weekday!=value) {
+                    NotifyPropertyChanging("Weekday");
+                    _weekday=value;
+                    NotifyPropertyChanged("Weekday");
+                }
+            }
+        }
+
         private int _hours;
         [Column(Name="Hours", Storage="_hours")]
         public int Hours {
@@ -330,19 +362,6 @@ namespace PhoneApp1.Models
                     NotifyPropertyChanging("Duration");
                     _duration=value;
                     NotifyPropertyChanged("Duration");
-                }
-            }
-        }
-
-        private int _weekday;
-        [Column(Name="Weekday", Storage="_weekday")]
-        public int Weekday {
-            get { return _weekday; }
-            set {
-                if (_weekday!=value) {
-                    NotifyPropertyChanging("Weekday");
-                    _weekday=value;
-                    NotifyPropertyChanged("Weekday");
                 }
             }
         }
