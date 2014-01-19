@@ -42,11 +42,11 @@ namespace PhoneApp1
                               orderby l.Weekday ascending
                               select (DayOfWeek)l.Weekday).ToList();
 
-            var startdate = DateTime.Today.Date;                // TODO lecture begin date
-            var enddate = DateTime.Today.AddMonths(1).Date;     // TODO lecture end date
-            var itDate = startdate;
+            var startDate = DateTime.Today.Date;                // TODO lecture begin date
+            var endDate = DateTime.Today.AddMonths(1).Date;     // TODO lecture end date
+            var itDate = startDate;
             _dates = new List<DateTime>();
-            while (itDate < enddate) {
+            while (itDate < endDate) {
                 if (daysOfWeek.Contains(itDate.DayOfWeek)) {
                     _dates.Add(itDate.Date);
                 }
@@ -86,6 +86,7 @@ namespace PhoneApp1
                 NavigationService.Navigate(new Uri("/Pages/LectureSelectPage.xaml", UriKind.Relative));
             } else {
                 var lecture  = App.Current.Resources["SelectedLecture"] as Lecture;
+                App.Current.Resources.Remove("SelectedLecture");
 
                 _viewModel = new PresencePageViewModel(lecture);
 

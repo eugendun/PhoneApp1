@@ -63,24 +63,6 @@ namespace PhoneApp1
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            //using (var db = DataContextFactory.GetDataContext()) {
-            //    db.Members.DeleteOnSubmit(db.Members.First());
-            //    db.SubmitChanges();
-
-            //    foreach (var lecture in db.Lectures) {
-            //        Debug.WriteLine("Lecture: {0}", lecture.Name);
-            //        foreach (var member in lecture.Members) {
-            //            Debug.WriteLine("visited by {0}", member.Surname);
-            //        }
-            //    }
-            //    foreach (var member in db.Members) {
-            //        Debug.WriteLine("Member: {0},{1}", member.Surname, member.Forename);
-            //        foreach (var lecture in member.Lectures) {
-            //            Debug.WriteLine("joined to : {0}", lecture.Name);
-            //        }
-            //    }
-            //}
-
             // Create the ViewModel object.
             viewModel = new PhoneAppViewModel();
         }

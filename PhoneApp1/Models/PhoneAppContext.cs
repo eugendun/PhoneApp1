@@ -40,9 +40,26 @@ namespace PhoneApp1.Models
                 _dbContext = new PhoneAppContext(_connectionString);
                 if (!_dbContext.DatabaseExists()) {
                     _dbContext.CreateDatabase();
+
+                    //_dbContext.Lectures.InsertOnSubmit(new Lecture { Name = "Info 1" });
+                    //_dbContext.Lectures.InsertOnSubmit(new Lecture { Name = "Info 2" });
+                    //_dbContext.Lectures.InsertOnSubmit(new Lecture { Name = "Info 3" });
+                    //_dbContext.Lectures.InsertOnSubmit(new Lecture { Name = "Info 4" });
+                    //_dbContext.Lectures.InsertOnSubmit(new Lecture { Name = "Info 5" });
+
+                    //_dbContext.Tutors.InsertOnSubmit(new Tutor { Surname = "Tutor", Forename="Holger" });
+                    //_dbContext.Tutors.InsertOnSubmit(new Tutor { Surname = "Tutor", Forename="Steve" });
+                    //_dbContext.Tutors.InsertOnSubmit(new Tutor { Surname = "Tutor", Forename="Carsten" });
+
+                    //_dbContext.Members.InsertOnSubmit(new Member { Surname="Musterfrau", Forename="Emilia" });
+                    //_dbContext.Members.InsertOnSubmit(new Member { Surname="Mustermann", Forename="Rafael" });
+                    //_dbContext.Members.InsertOnSubmit(new Member { Surname="Mustermann", Forename="Ruben" });
+                    //_dbContext.Members.InsertOnSubmit(new Member { Surname="Musterfrau", Forename="Jena" });
+
+                    //_dbContext.SubmitChanges();
                 }
 #if DEBUG
-                _dbContext.Log = new DebugTextWriter(); 
+                _dbContext.Log = new DebugTextWriter();
 #endif
             }
             return _dbContext;

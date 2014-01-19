@@ -12,27 +12,36 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
-	<phone:PhoneApplicationPage.Resources>
-		<DataTemplate x:Key="AssessmentMemberListItemTemplate">
-			<Grid d:DesignWidth="460.816" d:DesignHeight="434.286" Height="144" Width="427">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<CheckBox Content="bestanden" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2"/>
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-					<TextBlock TextWrapping="Wrap" Text="Name" FontSize="21.333" FontWeight="Bold"/>
-					<TextBlock TextWrapping="Wrap" Text=", " FontSize="21.333" FontWeight="Bold"/>
-					<TextBlock TextWrapping="Wrap" Text="Vorname" FontSize="21.333" FontWeight="Bold"/>
-				</StackPanel>
-				<TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Matrikelnummer" VerticalAlignment="Top" FontSize="16"/>
-			</Grid>
-		</DataTemplate>
-	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="PresenceDetailItemTemplate">
+            <Grid d:DesignWidth="124.776" d:DesignHeight="63.551">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding Date}" FontSize="13.333" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{Binding State}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="MemberOverviewItemTemplate">
+            <Grid d:DesignWidth="445.51" d:DesignHeight="403.673">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Surname}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text=", " VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Forename}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding MatNr}" FontSize="13.333"/>
+                    <CheckBox Content="bestanden" FontSize="16" RenderTransformOrigin="0.5,0.5"/>
+                </StackPanel>
+                <phone:LongListSelector ItemTemplate="{StaticResource PresenceDetailItemTemplate}" ItemsSource="{Binding AssessmentDetails}" Grid.ColumnSpan="2" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -49,8 +58,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<phone:LongListSelector ItemTemplate="{StaticResource AssessmentMemberListItemTemplate}"/>
-
+            <phone:LongListSelector x:Name="AssessmentList" ItemTemplate="{StaticResource MemberOverviewItemTemplate}" ItemsSource="{Binding}"/>
         </Grid>
     </Grid>
 
