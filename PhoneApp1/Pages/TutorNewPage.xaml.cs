@@ -21,15 +21,8 @@ namespace PhoneApp1.Views
         }
 
         private void OnClick_CheckButton(object sender, EventArgs e) {
-            int count = App.ViewModel.Tutors.Count(
-                t => t.Surname.Equals(_newTutor.Surname)
-                    && t.Forename.Equals(_newTutor.Forename));
-            if (count == 0 && !_newTutor.Surname.Equals("Nachname") && !_newTutor.Forename.Equals("Vorname")) {
-                App.ViewModel.Tutors.Add(_newTutor);
-                NavigationService.GoBack();
-            } else {
-                // TODO show a message that new tutor data is invalid
-            }
+            App.ViewModel.Tutors.Add(_newTutor);
+            NavigationService.GoBack();
         }
 
         private void OnClick_CancelButton(object sender, EventArgs e) {

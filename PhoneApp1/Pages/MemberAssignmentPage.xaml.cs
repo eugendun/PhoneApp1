@@ -22,16 +22,14 @@ namespace PhoneApp1
 
         public MemberAssignmentViewModel(Lecture lecture)
             : base() {
-            if (App.Current.Resources.Contains("SelectedMember")) {
-                App.Current.Resources.Remove("SelectedMember");
-            }
-
             Lecture = lecture;
 
-            AssignedMembers = new ObservableCollection<Member>(Lecture.Members);
-            UnassignedMembers = new ObservableCollection<Member>(from m in phoneAppDB.Members
-                                                                 where !AssignedMembers.Contains(m)
-                                                                 select m);
+            if (Lecture != null) {
+                AssignedMembers = new ObservableCollection<Member>(Lecture.Members);
+                UnassignedMembers = new ObservableCollection<Member>(from m in phoneAppDB.Members
+                                                                     where !AssignedMembers.Contains(m)
+                                                                     select m);
+            }
         }
 
         public void SaveChangesToDB() {
@@ -61,13 +59,15 @@ namespace PhoneApp1
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            var selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
-            if (selectedLecture == null) {
-                NavigationService.Navigate(new Uri("/Pages/LectureSelectPage.xaml", UriKind.Relative));
-            } else {
+            if (App.Current.Resources.Contains("SelectedLecture")) {
+                var selectedLecture = App.Current.Resources["SelectedLecture"] as Lecture;
+                App.Current.Resources.Remove("SelectedLecture");
                 _viewModel = new MemberAssignmentViewModel(selectedLecture);
                 DataContext = _viewModel;
+            } else {
+                NavigationService.Navigate(new Uri("/Pages/LectureSelectPage.xaml", UriKind.Relative));
             }
+
             base.OnNavigatedTo(e);
         }
 

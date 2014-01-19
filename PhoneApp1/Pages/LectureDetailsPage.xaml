@@ -56,14 +56,14 @@
                 <TextBlock TextWrapping="Wrap" Text="Name:" Margin="0,0,0,54"/>
                 <TextBlock TextWrapping="Wrap" Text="Begint am:" Margin="0,27"/>
                 <TextBlock TextWrapping="Wrap" Text="Endet am:" Margin="0,54,0,0"/>
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentLecture.Name}" VerticalAlignment="Top" Grid.Column="1" Padding="0" Margin="10,0,0,0"/>
-                <TextBlock TextWrapping="Wrap" Text="{Binding CurrentLecture.BeginDate}" Grid.Column="1" Margin="10,27,0,27" Padding="0"/>
-                <TextBlock TextWrapping="Wrap" Text="{Binding CurrentLecture.EndDate}" Grid.Column="1" Margin="10,54,0,0" Padding="0"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Grid.Column="1" Padding="0" Margin="10,0,0,0"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding BeginDate}" Grid.Column="1" Margin="10,27,0,27" Padding="0"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding EndDate}" Grid.Column="1" Margin="10,54,0,0" Padding="0"/>
             </Grid>
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zugeordnete Tutoren:" VerticalAlignment="Top" Grid.Row="1"/>
-            <phone:LongListSelector x:Name="AssignedTutorsList" Grid.Row="2" ItemsSource="{Binding AssignedTutors}" ItemTemplate="{StaticResource TutorListItemTemplate}" SelectionChanged="OnSelectionChanged_AssignedTutorsList" Margin="0,0,0,15"/>
+            <phone:LongListSelector x:Name="AssignedTutorsList" Grid.Row="2" ItemsSource="{Binding}" ItemTemplate="{StaticResource TutorListItemTemplate}" Margin="0,0,0,15" SelectionChanged="AssignedTutorsList_SelectionChanged" />
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Alle Tutoren" VerticalAlignment="Top" Grid.Row="3"/>
-            <phone:LongListSelector x:Name="AllTutorsList" Grid.Row="4" ItemsSource="{Binding UnassignedTutors}" ItemTemplate="{StaticResource TutorListItemTemplate}" SelectionChanged="OnSelectionChanged_AllTutorsList"/>
+            <phone:LongListSelector x:Name="UnassignedTutorsList" Grid.Row="4" ItemsSource="{Binding}" ItemTemplate="{StaticResource TutorListItemTemplate}" SelectionChanged="UnassignedTutorsList_SelectionChanged" />
         </Grid>
 
         <!--ContentPanel - place additional content here-->

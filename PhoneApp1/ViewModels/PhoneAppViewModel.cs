@@ -35,28 +35,84 @@ namespace PhoneApp1.ViewModel
     {
         public PhoneAppViewModel() {
             phoneAppDB = DataContextFactory.GetDataContext();
-            Lectures = new ObservableCollection<Lecture>(phoneAppDB.Lectures.ToList());
-            Lectures.CollectionChanged += OnCollectionChanged;
+            Lectures = new ObservableCollection<Lecture>(phoneAppDB.Lectures);
+            Lectures.CollectionChanged += Lectures_CollectionChanged;
 
-            Tutors = new ObservableCollection<Tutor>(phoneAppDB.Tutors.ToList());
-            Tutors.CollectionChanged += OnCollectionChanged;
+            Tutors = new ObservableCollection<Tutor>(phoneAppDB.Tutors);
+            Tutors.CollectionChanged += Tutors_CollectionChanged;
 
-            Members = new ObservableCollection<Member>(phoneAppDB.Members.ToList());
-            Members.CollectionChanged += OnCollectionChanged;
+            Members = new ObservableCollection<Member>(phoneAppDB.Members);
+            Members.CollectionChanged += Members_CollectionChanged;
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+        private void Lectures_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action==NotifyCollectionChangedAction.Add) {
-                foreach (var addedItem in e.NewItems) {
-                    phoneAppDB.GetTable(addedItem.GetType()).InsertOnSubmit(addedItem);
+                foreach (Lecture addedLecture in e.NewItems) {
+                    phoneAppDB.Lectures.InsertOnSubmit(addedLecture);
                 }
             }
             if (e.Action==NotifyCollectionChangedAction.Remove) {
-                foreach (var removedItem in e.OldItems) {
-                    phoneAppDB.GetTable(removedItem.GetType()).DeleteOnSubmit(removedItem);
+                foreach (Lecture removedLecture in e.OldItems) {
+                    var affectedTutors = from t in Tutors
+                                         where t.Lectures.Contains(removedLecture)
+                                         select t;
+                    foreach (Tutor tutor in affectedTutors) {
+                        tutor.Lectures.Remove(removedLecture);
+                    }
+
+                    var affectedMembers = from m in Members
+                                          where m.Lectures.Contains(removedLecture)
+                                          select m;
+                    foreach (Member member in affectedMembers) {
+                        member.Lectures.Remove(removedLecture);
+                    }
+
+                    phoneAppDB.Lectures.DeleteOnSubmit(removedLecture);
                 }
             }
-            phoneAppDB.SubmitChanges();
+            SaveChangesToDB();
+        }
+
+        private void Tutors_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action==NotifyCollectionChangedAction.Add) {
+                foreach (Tutor addedTutor in e.NewItems) {
+                    phoneAppDB.Tutors.InsertOnSubmit(addedTutor);
+                }
+            }
+            if (e.Action==NotifyCollectionChangedAction.Remove) {
+                foreach (Tutor removedTutor in e.OldItems) {
+                    var affectedLectures = from l in Lectures
+                                           where l.Tutors.Contains(removedTutor)
+                                           select l;
+                    foreach (Lecture lecture in affectedLectures) {
+                        lecture.Tutors.Remove(removedTutor);
+                    }
+
+                    phoneAppDB.Tutors.DeleteOnSubmit(removedTutor);
+                }
+            }
+            SaveChangesToDB();
+        }
+
+        private void Members_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action==NotifyCollectionChangedAction.Add) {
+                foreach (Member addedMember in e.NewItems) {
+                    phoneAppDB.Members.InsertOnSubmit(addedMember);
+                }
+            }
+            if (e.Action==NotifyCollectionChangedAction.Remove) {
+                foreach (Member removedMember in e.OldItems) {
+                    var affectedLectures = from l in Lectures
+                                           where l.Members.Contains(removedMember)
+                                           select l;
+                    foreach (Lecture lecture in affectedLectures) {
+                        lecture.Members.Remove(removedMember);
+                    }
+
+                    phoneAppDB.Members.DeleteOnSubmit(removedMember);
+                }
+            }
+            SaveChangesToDB();
         }
 
         private ObservableCollection<Lecture> _lectures;
@@ -84,6 +140,10 @@ namespace PhoneApp1.ViewModel
                 _Members = value;
                 NotifyPropertyChanged("Members");
             }
+        }
+
+        public void SaveChangesToDB() {
+            phoneAppDB.SubmitChanges();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace PhoneApp1.Models
                 _dbContext = new PhoneAppContext(_connectionString);
                 if (!_dbContext.DatabaseExists()) {
                     _dbContext.CreateDatabase();
-                } 
+                }
             }
             return _dbContext;
         }
@@ -88,7 +88,7 @@ namespace PhoneApp1.Models
     #region Tables
 
     [Table(Name="Lectures")]
-    public class Lecture
+    public class Lecture : NotifyingModel
     {
         private int _id;
         [Column(Name="Id", Storage="_id", IsPrimaryKey=true, IsDbGenerated=true)]
@@ -100,7 +100,9 @@ namespace PhoneApp1.Models
             get { return _name; }
             set {
                 if (value!=_name) {
+                    NotifyPropertyChanging("Name");
                     _name = value;
+                    NotifyPropertyChanged("Name");
                 }
             }
         }
@@ -111,7 +113,9 @@ namespace PhoneApp1.Models
             get { return _beginDate; }
             set {
                 if (_beginDate!=value) {
+                    NotifyPropertyChanging("BeginDate");
                     _beginDate=value;
+                    NotifyPropertyChanged("BeginDate");
                 }
             }
         }
@@ -122,7 +126,9 @@ namespace PhoneApp1.Models
             get { return _endDate; }
             set {
                 if (_endDate!=value) {
+                    NotifyPropertyChanging("EndDate");
                     _endDate=value;
+                    NotifyPropertyChanged("EndDate");
                 }
             }
         }
@@ -131,21 +137,31 @@ namespace PhoneApp1.Models
         [Association(Name="FK_ExceptionDates_Lectures", Storage="_exceptionDates", OtherKey="Id", DeleteRule="CASCADE")]
         public ICollection<ExceptionDate> ExceptionDates {
             get { return _exceptionDates; }
-            set { _exceptionDates.Assign(value); }
+            set {
+                NotifyPropertyChanging("ExceptionDates");
+                _exceptionDates.Assign(value);
+                NotifyPropertyChanged("ExceptionDates");
+            }
         }
 
         private EntitySet<LectureTime> _lectureTimes;
         [Association(Name="FK_LectureTimes_Lectures", Storage="_lectureTimes", OtherKey="Id", DeleteRule="CASCADE")]
         public ICollection<LectureTime> LectureTimes {
             get { return _lectureTimes; }
-            set { _lectureTimes.Assign(value); }
+            set {
+                NotifyPropertyChanging("LectureTimes");
+                _lectureTimes.Assign(value);
+                NotifyPropertyChanged("LectureTimes");
+            }
         }
 
         private EntitySet<LectureTutor> _lectureTutor;
         [Association(Name="FK_LectureTutors_Lectures", Storage="_lectureTutor", OtherKey="_lectureId", DeleteRule="CASCADE")]
         private ICollection<LectureTutor> LectureTutors {
             get { return _lectureTutor; }
-            set { _lectureTutor.Assign(value); }
+            set {
+                _lectureTutor.Assign(value);
+            }
         }
 
         public ICollection<Tutor> Tutors {
@@ -158,9 +174,11 @@ namespace PhoneApp1.Models
 
         private void OnTutorsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action==NotifyCollectionChangedAction.Add) {
+                NotifyPropertyChanging("Tutors");
                 foreach (Tutor addedTutor in e.NewItems) {
                     LectureTutors.Add(new LectureTutor { Lecture=this, Tutor=addedTutor });
                 }
+                NotifyPropertyChanged("Tutors");
             }
 
             if (e.Action==NotifyCollectionChangedAction.Remove) {
@@ -168,9 +186,11 @@ namespace PhoneApp1.Models
                     var affectedLectureTutors = from lt in LectureTutors
                                                 where lt.Tutor==removedTutor
                                                 select lt;
+                    NotifyPropertyChanging("Tutors");
                     foreach (LectureTutor lectureTutorToRemove in affectedLectureTutors) {
                         lectureTutorToRemove.Tutor = null;
                     }
+                    NotifyPropertyChanged("Tutors");
                 }
             }
         }
@@ -192,9 +212,11 @@ namespace PhoneApp1.Models
 
         private void OnMembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action == NotifyCollectionChangedAction.Add) {
+                NotifyPropertyChanging("Members");
                 foreach (Member addedMember in e.NewItems) {
                     LectureMembers.Add(new LectureMember { Lecture = this, Member = addedMember });
                 }
+                NotifyPropertyChanged("Members");
             }
 
             if (e.Action == NotifyCollectionChangedAction.Remove) {
@@ -202,9 +224,11 @@ namespace PhoneApp1.Models
                     var affectedLectureMembers = from lm in LectureMembers
                                                  where lm.Member == removedMember
                                                  select lm;
+                    NotifyPropertyChanging("Members");
                     foreach (LectureMember affectedLectureMember in affectedLectureMembers) {
                         affectedLectureMember.Lecture = null;
                     }
+                    NotifyPropertyChanged("Members");
                 }
             }
         }
@@ -265,7 +289,7 @@ namespace PhoneApp1.Models
     }
 
     [Table(Name="LectureTimes")]
-    public class LectureTime
+    public class LectureTime : NotifyingModel
     {
         private int _id;
         [Column(Name="Id", Storage="_id", IsPrimaryKey=true, IsDbGenerated=true)]
@@ -277,7 +301,9 @@ namespace PhoneApp1.Models
             get { return _hours; }
             set {
                 if (Hours!=value) {
+                    NotifyPropertyChanging("Hours");
                     _hours=value;
+                    NotifyPropertyChanged("Hours");
                 }
             }
         }
@@ -288,7 +314,9 @@ namespace PhoneApp1.Models
             get { return _minutes; }
             set {
                 if (_minutes!=value) {
+                    NotifyPropertyChanging("Minutes");
                     _minutes=value;
+                    NotifyPropertyChanged("Minutes");
                 }
             }
         }
@@ -299,7 +327,9 @@ namespace PhoneApp1.Models
             get { return _duration; }
             set {
                 if (_duration!=value) {
+                    NotifyPropertyChanging("Duration");
                     _duration=value;
+                    NotifyPropertyChanged("Duration");
                 }
             }
         }
@@ -310,7 +340,9 @@ namespace PhoneApp1.Models
             get { return _weekday; }
             set {
                 if (_weekday!=value) {
+                    NotifyPropertyChanging("Weekday");
                     _weekday=value;
+                    NotifyPropertyChanged("Weekday");
                 }
             }
         }
@@ -321,14 +353,16 @@ namespace PhoneApp1.Models
             get { return _lecture.Entity; }
             set {
                 if (_lecture.Entity!=value) {
+                    NotifyPropertyChanging("Lecture");
                     _lecture.Entity=value;
+                    NotifyPropertyChanged("Lecture");
                 }
             }
         }
     }
 
     [Table(Name="Tutors")]
-    public class Tutor
+    public class Tutor : NotifyingModel
     {
         private int _id;
         [Column(Name="Id", Storage="_id", IsPrimaryKey=true, IsDbGenerated=true)]
@@ -340,7 +374,9 @@ namespace PhoneApp1.Models
             get { return _surname; }
             set {
                 if (_surname!=value) {
+                    NotifyPropertyChanging("Surname");
                     _surname=value;
+                    NotifyPropertyChanged("Surname");
                 }
             }
         }
@@ -351,7 +387,9 @@ namespace PhoneApp1.Models
             get { return _forename; }
             set {
                 if (_forename!=value) {
+                    NotifyPropertyChanging("Forename");
                     _forename=value;
+                    NotifyPropertyChanged("Forename");
                 }
             }
         }
@@ -375,18 +413,22 @@ namespace PhoneApp1.Models
 
         private void OnLecturesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action==NotifyCollectionChangedAction.Add) {
+                NotifyPropertyChanging("Lectures");
                 foreach (Lecture addedLecture in e.NewItems) {
                     LectureTutors.Add(new LectureTutor { Lecture=addedLecture, Tutor=this });
                 }
+                NotifyPropertyChanged("Lectures");
             }
             if (e.Action==NotifyCollectionChangedAction.Remove) {
                 foreach (Lecture removedLecture in e.OldItems) {
                     var affectedLectureTutors = from lt in LectureTutors
                                                 where lt.Lecture==removedLecture
                                                 select lt;
+                    NotifyPropertyChanging("Lectures");
                     foreach (LectureTutor lectureTutorToRemove in affectedLectureTutors) {
                         lectureTutorToRemove.Lecture = null;
                     }
+                    NotifyPropertyChanging("Lectures");
                 }
             }
         }
