@@ -2,7 +2,7 @@
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US"/>
-  <App xmlns="" ProductID="{33efb238-e47a-4219-988f-70316df75a1c}" Title="PhoneApp1" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneApp1 author" Description="Sample description" Publisher="PhoneApp1" PublisherID="{b6914f8d-5afb-4bcf-8381-95e117230f7a}">
+  <App xmlns="" ProductID="{33efb238-e47a-4219-988f-70316df75a1c}" Title="InfoLab" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneApp1 author" Description="Sample description" Publisher="PhoneApp1" PublisherID="{b6914f8d-5afb-4bcf-8381-95e117230f7a}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING"/>
@@ -20,7 +20,7 @@
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>PhoneApp1</Title>
+          <Title>InfoLab</Title>
           <BackContent></BackContent>
           <BackBackgroundImageURI></BackBackgroundImageURI>
           <BackTitle></BackTitle>
